@@ -1,3 +1,7 @@
+#sidebar
+  .aside
+    %h3 koek
+    hallo
 #main.clearfix
   :if article.version
     %a.sha-version{ href: "/#{article.version}/#{article.name}" } Static Version
@@ -21,7 +25,6 @@
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 
-#sidebar
   -#.aside.clearfix
     %h4 About the Author
     %img.headshot{src: gravitar(author.email) }
