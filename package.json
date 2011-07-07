@@ -1,0 +1,21 @@
+{
+  "author": "Softwarebakery <info@softwarebakery.com> (http://softwarebakery.com/",
+  "name": "softwarebakeryblog",
+  "description": "Softwarebakery blog",
+  "version": "0.0.0",
+  "homepage": "http://softwarebakery.com/",
+  "repository": {
+    "type": "git",
+    "url": "git://95.211.63.145/softwarebakeryblog.git"
+  },
+  "engines": {
+    "node": ">=0.4.0"
+  },
+  "dependencies": {
+    "stack": ">=0.0.3",
+    "creationix": ">=0.1.2",
+    "wheat": ">=0.2.0",
+    "cluster": ">=0.6.4"
+  },
+  "devDependencies": {}
+}
