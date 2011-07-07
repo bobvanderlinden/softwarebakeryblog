@@ -15,13 +15,8 @@
   .aside
     = markdownEncode(description)
   .bubble
-    %h4
-      Articles
+    %h3
+      Projects
     %ul
-      :each article in articles.slice(0,20)
-        %li
-          %a{href: "/" + article.name}&=article.title
-          &=" by " + article.author.name
-          :if article.node
-            %span.versiontag&= article.node
-  .bubble= markdownEncode(description)
+      %li
+        %a{href: "/projects/project1"} Project 1
