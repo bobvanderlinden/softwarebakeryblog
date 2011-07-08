@@ -3,5 +3,5 @@ var stack = require('stack'),
     http = require('http');
 
 http.createServer(stack(
-  require('wheat')(__dirname +"/..")
+  require('./wheat')(__dirname +"/..")
 )).listen(8080);
