@@ -164,26 +164,28 @@ var Renderers = module.exports = {
   }),
 
   article: Git.safe(function renderArticle(version, name, callback) {
-    var article, description;
+    var article, description, articles;
     Step(
       function loadData() {
         Git.getHead(this.parallel());
         Data.fullArticle(version, name, this.parallel());
+        Data.articles(version, this.parallel());
       },
-      function (err, head, props) {
+      function (err, head, props, as) {
         if (err) { callback(err); return; }
         article = props;
+        articles = as;
         insertSnippets(article.markdown, article.snippets, this.parallel());
-        Git.readFile(head, "description.markdown", this.parallel());
       },
-      function applyTemplate(err, markdown, description) {
+      function applyTemplate(err, markdown) {
         if (err) { callback(err); return; }
+        console.log('Apply template...', articles);
         article.markdown = markdown;
         Tools.render("article", {
           title: article.title,
           article: article,
           author: article.author,
-          description: description
+          articles: articles
         }, this);
       },
       function finish(err, buffer) {

@@ -288,8 +288,11 @@ the list items to fix the size issue */
   padding: 0;
 }
 #sidebar ul {
-  padding: 0 0 0 20px;
+  padding: 0 0 0 0px;
   margin: 0;
+}
+#sidebar li {
+  list-style: none;
 }
 #sidebar .versiontag {
   -webkit-border-radius: 5px;
