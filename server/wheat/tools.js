@@ -38,7 +38,11 @@ var Helpers = {
   inspect: require(process.binding('natives').util ? 'util' : 'sys').inspect,
   intro: function intro(markdown) {
     var html = Markdown.encode(markdown);
-    return html.substr(0, html.indexOf("</p>")+4);
+    var match = /<h[0-9]>/.exec(html);
+    if (match) {
+      html = html.substr(0, match.index);
+    }
+    return html;
   },
   markdownEncode: function markdownEncode(markdown) {
     return Markdown.encode(markdown+"");
