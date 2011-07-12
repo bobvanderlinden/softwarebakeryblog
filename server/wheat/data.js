@@ -242,8 +242,14 @@ var Data = module.exports = {
         page.version = version;
         page.file = file;
         page.log = log;
-        if (Object.keys(log).length > 0) {
-          page.lastUpdated = log[Object.keys(log)[0]].date;
+        var logKeys = Object.keys(log);
+        if (logKeys.length > 0) {
+          page.lastUpdated = log[logKeys[0]].date;
+        } else {
+          page.lastUpdated = new Date();
+        }
+        if (!page.date) {
+          page.date = log[logKeys[logKeys.length-1]].date;
         }
         if (filler) {
           return filler(page, this.parallel());
