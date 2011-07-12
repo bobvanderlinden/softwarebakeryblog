@@ -147,35 +147,21 @@ var Renderers = module.exports = {
     );
   }),
 
-  feed: Git.safe(function feed(version, callback) {
-    var articles;
+  rssmarkdown: Git.safe(function rssmarkdown(version, file, templateName, filler, callback) {
     Step(
-      function loadData() {
-        Data.fullArticles(version, this);
+      function loadMarkdown() {
+        Data.markdown(version, file, filler, this.parallel());
       },
-      function (err, data) {
+      function applyTemplate(err, page) {
         if (err) { callback(err); return; }
-        articles = data;
-        var group = this.group();
-        articles.forEach(function (article) {
-          insertSnippets(article.markdown, article.snippets, group());
-        });
-      },
-      function applyTemplate(err, markdowns) {
-        if (err) { callback(err); return; }
-        markdowns.forEach(function (markdown, i) {
-          articles[i].markdown = markdown;
-        });
-        Tools.render("feed.xml", {
-          articles: articles
-        }, this, true);
+        Tools.render(templateName, page, this);
       },
       function finish(err, buffer) {
         if (err) { callback(err); return; }
         postProcess({
           "Content-Type":"application/rss+xml",
           "Cache-Control": "public, max-age=3600"
-        }, buffer, version, "feed.xml", this);
+        }, buffer, version, file, this);
       },
       callback
     );

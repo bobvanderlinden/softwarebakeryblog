@@ -152,7 +152,11 @@ module.exports = function setup(repo) {
         projects: getProjects(version)
       }), callback);
   });
-  addRoute(/^\/feed.xml$/, Renderers.feed);
+  addRoute(/^\/feed.xml$/, function(version, callback) {
+      Renderers.rssmarkdown(version, 'description.markdown', 'feed.xml', filler({
+        articles: getArticles(version)
+      }), callback);
+  });
   addRoute(/^\/4b64j3k5b6jh3bk6b$/, function(version, callback) {
     function returnresult(r) {
       callback(null, { headers: {}, buffer: r });
