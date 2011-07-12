@@ -1,4 +1,4 @@
-Email: frozencow@softwarebakery.com
+Email: frozencow@gmail.com
 Github: FrozenCow
 
 Hi
