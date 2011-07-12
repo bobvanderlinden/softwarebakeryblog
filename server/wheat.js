@@ -25,9 +25,81 @@ require.paths.unshift(__dirname + "/wheat");
 require('proto');
 var Url = require('url'),
     Git = require('git-fs'),
-    Renderers = require('renderers');
+    Renderers = require('renderers'),
+    Path = require('path'),
+    Data = require('data');
 
 var routes = [];
+
+function split() {
+  var functions = arguments;
+  return function() {
+    var args = arguments;
+    var result = undefined;
+    functions.forEach(function(f) {
+      result = f.apply(null, args);
+    });
+    return result;
+  }
+}
+
+function logArgs(message, f) {
+  return split(function() {
+    console.log(message, arguments);
+  }, f);
+}
+
+function dbg() {
+  var name, f;
+  if (typeof arguments[0] === 'string') {
+	name = arguments[0];
+	f = arguments[1];
+  } else {
+	name = undefined;
+	f = arguments[0];
+  }
+  return function() {
+	if (name) {
+	  console.log('Name:', name);
+	}
+	console.log('Function:', f.toString().split('\n')[0]);
+	var args = [];
+	for(var i = 0; i < arguments.length; i++) { args.push(arguments[i]); }
+	console.log('Arguments:', args);
+	try {
+	  var result = f.apply(null, arguments);
+	  console.log('Result:', result);
+	} catch(e) {
+	  console.log('Exception:', e);
+	  throw e;
+	}
+  };
+}
+
+function fill(/*initial obj, { name: function ... }, ... arguments ..., callback*/) {
+  var result = arguments[0];
+  var funcs = arguments[1];
+  var callback = arguments[arguments.length-1];
+  var args = arguments.length > 3 ? Array.prototype.slice.apply(arguments, [2, arguments.length-2]) : [];
+  var callbacks = Object.keys(funcs).length;
+  for(var name in funcs) {
+    (function(name) {
+      var rhandler = function(err, r) {
+        if (err) { callback(err, null); return; }
+        result[name] = r;
+        callbacks--;
+        if (callbacks === 0) {
+          callback(null, result);
+        }
+      };
+      var r = funcs[name].apply(null, [result].concat(args).concat([rhandler]));
+      if (r && !result[name]) { rhandler(r); }
+    })(name);
+  }
+  if (callbacks === 0) {
+    callback(null, result);
+  }
+}
 
 function addRoute(regex, renderer) {
   routes.push({regex: regex, renderer: renderer});
@@ -46,20 +118,55 @@ function handleRoute(req, res, next, renderer, match) {
   renderer.apply(null, match.concat([callback]));
 }
 
+function getArticles(version) {
+  return function(p, callback) {
+    Data.markdowns(version, 'articles', function(p, callback) {
+      fill(p, {
+        author: function(p, callback) { if (p.author) { Data.author(version, p.author, callback); } else { callback(null, undefined); } }
+      }, callback);
+    }, callback);
+  };
+}
+
+function getProjects(version) {
+  return function(p, callback) {
+    Data.markdowns(version, 'projects', undefined, callback);
+  };
+}
+
+function filler(obj) {
+  return function(p, callback) {
+    fill(p, obj, callback);
+  };
+}
+
 module.exports = function setup(repo) {
 
   // Initialize the Git Filesystem
   Git(repo || process.cwd());
   // Set up our routes
-  addRoute(/^\/()$/, Renderers.index);
-  addRoute(/^\/()feed.xml$/, Renderers.feed);
-  addRoute(/^\/([a-f0-9]{40})\/([a-z0-9_-]+)$/, Renderers.article);
-  addRoute(/^\/([a-f0-9]{40})\/(.+\.dot)$/, Renderers.dotFile);
-  addRoute(/^\/([a-f0-9]{40})\/(.+\.[a-z]{2,4})$/, Renderers.staticFile);
-  addRoute(/^\/()([a-z0-9_-]+)$/, Renderers.article);
-  addRoute(/^\/()(.+\.dot)$/, Renderers.dotFile);
-  addRoute(/^\/()(.+\.[a-z]{2,4})$/, Renderers.staticFile);
-  addRoute(/^\/()category\/([\%\.a-z0-9_-]+)$/,  Renderers.categoryIndex);
+  addRoute(/^\/$/, function(version, callback) {
+    Renderers.markdown(version, 'description.markdown', 'index', filler({
+        articles: getArticles(version),
+        projects: getProjects(version)
+      }), callback);
+  });
+  addRoute(/^\/feed.xml$/, Renderers.feed);
+  addRoute(/^\/([a-z0-9_-]+)$/, function(version, article, callback) {
+    Renderers.markdown(version, Path.join('articles', article + '.markdown'), 'article', filler({
+      author: function(props, callback) { if (props.author) { Data.author(version, props.author, callback); } else { callback(undefined); } },
+      articles: getArticles(version),
+      projects: getProjects(version)
+    }), callback);
+  });
+  addRoute(/^\/project\/([a-z0-9_-]+)$/, function(version, projectName, callback) {
+    Renderers.markdown(version, Path.join('projects', projectName + '.markdown'), 'project', filler({
+      author: function(props, callback) { if (props.author) { Data.author(version, props.author, callback); } else { callback(null, props.author); } },
+      articles: getArticles(version),
+      projects: getProjects(version)
+    }), callback);
+  });
+  addRoute(/^\/(.+\.[a-z]{2,4})$/, Renderers.staticFile);
 
 
   return function handle(req, res, next) {
@@ -68,17 +175,8 @@ module.exports = function setup(repo) {
       var route = routes[i];
       var match = url.pathname.match(route.regex);
       if (match) {
-        match = Array.prototype.slice.call(match, 1);
-        if (match[0] === '') {
-          // Resolve head to a sha if unspecified
-          Git.getHead(function (err, sha) {
-            if (err) { throw err; }
-            match[0] = sha;
-            handleRoute(req, res, next, route.renderer, match);
-          });
-        } else {
-          handleRoute(req, res, next, route.renderer, match);
-        }
+        var arguments = ['fs'].concat(match.slice(1));
+        handleRoute(req, res, next, route.renderer, arguments);
         return;
       }
     }

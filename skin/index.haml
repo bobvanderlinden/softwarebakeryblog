@@ -5,11 +5,12 @@
     %p Baking software'n'stuff
     %h3 Projects
     %ul
-      %li
-        %a{href: "/projects/project1"} Project 1
+      :each project in projects
+        %li
+          %a{href: "/project/" + project.name}=project.title
 
 #main.clearfix
-  :each article in articles.slice(0,15)
+  :each article in Array.prototype.slice.apply(articles, [0,15])
     .article
       .author
         %img{src:gravitar(article.author.email, 30)}

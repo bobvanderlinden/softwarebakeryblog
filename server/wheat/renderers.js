@@ -6,7 +6,8 @@ var Git = require('git-fs'),
     MD5 = require('./md5'),
     ChildProcess = require('child_process'),
     getMime = require('simple-mime')('application/octet-string'),
-    Step = require('step');
+    Step = require('step'),
+    Path = require('path');
 
 // Execute a child process, feed it a buffer and get a new buffer filtered.
 function execPipe(command, args, data, callback) {
@@ -99,31 +100,48 @@ function insertSnippets(markdown, snippets, callback) {
   )
 }
 
+function dbg() {
+  var name, f;
+  if (typeof arguments[0] === 'string') {
+    name = arguments[0];
+    f = arguments[1];
+  } else {
+    name = undefined;
+    f = arguments[0];
+  }
+  return function() {
+    if (name) {
+      console.log('Name:', name);
+    }
+    console.log('Function:', f.toString().split('\n')[0]);
+    var args = [];
+    for(var i = 0; i < arguments.length; i++) { args.push(arguments[i]); }
+    console.log('Arguments:', args);
+    try {
+      var result = f.apply(null, arguments);
+      console.log('Result:', result);
+    } catch(e) {
+      console.log('Exception:', e);
+      throw e;
+    }
+  };
+}
+
 var Renderers = module.exports = {
-  index: Git.safe(function index(version, callback) {
+  markdown: Git.safe(function markdown(version, file, templateName, filler, callback) {
     Step(
-      function getHead() {
-        Git.getHead(this);
+      function loadMarkdown() {
+        Data.markdown(version, file, filler, this.parallel());
       },
-      function loadData(err, head) {
+      function applyTemplate(err, page) {
         if (err) { callback(err); return; }
-        Data.articles(version, this.parallel());
-        Git.readFile(head, "description.markdown", this.parallel());
-				Data.categories(version, this.parallel());
-      },
-      function applyTemplate(err, articles, description, categories) {
-        if (err) { callback(err); return; }
-        Tools.render("index", {
-          articles: articles,
-          description: description,
-					categories: categories
-        }, this);
+        Tools.render(templateName, page, this);
       },
       function callPostProcess(err, buffer) {
         if (err) { callback(err); return; }
         postProcess({
           "Cache-Control": "public, max-age=3600"
-        }, buffer, version, "index", this);
+        }, buffer, version, file, this);
       },
       callback
     );
@@ -158,75 +176,6 @@ var Renderers = module.exports = {
           "Content-Type":"application/rss+xml",
           "Cache-Control": "public, max-age=3600"
         }, buffer, version, "feed.xml", this);
-      },
-      callback
-    );
-  }),
-
-  article: Git.safe(function renderArticle(version, name, callback) {
-    var article, description, articles;
-    Step(
-      function loadData() {
-        Git.getHead(this.parallel());
-        Data.fullArticle(version, name, this.parallel());
-        Data.articles(version, this.parallel());
-      },
-      function (err, head, props, as) {
-        if (err) { callback(err); return; }
-        article = props;
-        articles = as;
-        insertSnippets(article.markdown, article.snippets, this.parallel());
-      },
-      function applyTemplate(err, markdown) {
-        if (err) { callback(err); return; }
-        console.log('Apply template...', articles);
-        article.markdown = markdown;
-        Tools.render("article", {
-          title: article.title,
-          article: article,
-          author: article.author,
-          articles: articles
-        }, this);
-      },
-      function finish(err, buffer) {
-        if (err) { callback(err); return; }
-        postProcess({
-          "Cache-Control": "public, max-age=3600"
-        }, buffer, version, name, this);
-      },
-      callback
-    );
-  }),
-
-  categoryIndex: Git.safe(function index(version, category, callback) {
-    Step(
-      function getHead() {
-        Git.getHead(this);
-      },
-      function loadData(err, head) {
-        if (err) { callback(err); return; }
-        Data.articles(version, this.parallel());
-        Git.readFile(head, "description.markdown", this.parallel());
-				Data.categories(version, this.parallel());
-      },
-      function applyTemplate(err, articles, description, categories) {
-        if (err) { callback(err); return; }
-				
-        var articlesForCategory = articles.reduce(function (start, element){
-          return element.categories && element.categories.indexOf(category) >= 0 ? start.concat(element) : start;
-        }, []);
-								
-        Tools.render("index", {
-          articles: articlesForCategory,
-          description: description,
-					categories: categories
-        }, this);
-      },
-      function callPostProcess(err, buffer) {
-        if (err) { callback(err); return; }
-        postProcess({
-          "Cache-Control": "public, max-age=3600"
-        }, buffer, version, "index", this);
       },
       callback
     );

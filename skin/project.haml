@@ -1,0 +1,27 @@
+#sidebar
+  .aside
+    %h3 Projects
+    %ul
+      :each project in projects
+        %li
+          %a{href: "/project/" + project.name}&=project.title
+    %h3 Articles
+    %ul
+      :each article in articles.slice(0,20)
+        %li
+          %a{href: "/" + article.name}&=article.title
+          &=" by " + article.author.name
+#main.clearfix
+  %h1
+    %a{href: "/project/#{name}"}&= title
+  = markdownEncode(markdown)
+  %hr{style:"clear:both"}
+  #disqus_thread.body
+  :script
+    var disqus_shortname = 'softwarebakery';
+    var disqus_url = "http://softwarebakery.com/project/#{name}";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();

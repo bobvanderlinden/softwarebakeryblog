@@ -1,7 +1,5 @@
 #sidebar
   .aside
-    %h3 koek
-    %p hallo
     %h3 Articles
     %ul
       :each article in articles.slice(0,20)
@@ -9,22 +7,20 @@
           %a{href: "/" + article.name}&=article.title
           &=" by " + article.author.name
 #main.clearfix
-  :if article.version
-    %a.sha-version{ href: "/#{article.version}/#{article.name}" } Static Version
   %h1
-    %a{href: "/#{article.name}"}&= article.title
+    %a{href: "/#{name}"}&= title
   .articlemeta
     %span.author&= "by " + author.name
-    :if article.date
-      %span.date&= formatDate(article.date, "%l %F %j, %Y")
-    :if article.lastUpdated
-      %span.lastUpdated&= formatDate(article.lastUpdated, "%l %F %j, %Y")
-  = markdownEncode(article.markdown)
+    :if date
+      %span.date&= formatDate(date, "%l %F %j, %Y")
+    :if lastUpdated
+      %span.lastUpdated&= formatDate(lastUpdated, "%l %F %j, %Y")
+  = markdownEncode(markdown)
   %hr{style:"clear:both"}
   #disqus_thread.body
   :script
     var disqus_shortname = 'softwarebakery';
-    var disqus_url = "http://softwarebakery.com/#{article.name}";
+    var disqus_url = "http://softwarebakery.com/#{name}";
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
@@ -46,26 +42,26 @@
   -#.aside
     %h4
       About this Article
-    :if article.date
-      %dl{title: article.date}
+    :if date
+      %dl{title: date}
         %dt
           Date Released:
         %dd
-          &= formatDate(article.date, "%l %F %j, %Y")
-    :if article.lastUpdated
-      %dl{title: article.lastUpdated}
+          &= formatDate(date, "%l %F %j, %Y")
+    :if lastUpdated
+      %dl{title: lastUpdated}
         %dt
           Last Updated:
         %dd
-          &= formatDate(article.lastUpdated, "%l %F %j, %Y")
+          &= formatDate(lastUpdated, "%l %F %j, %Y")
 
     %dl
       %dt
         Revisions:
       %dd
         %ul
-          :each version, stat in article.log
+          :each version, stat in log
             %li{title: stat.message}
-              %a{ href: "/#{version}/#{article.name}" }
+              %a{ href: "/#{version}/#{name}" }
                 &= new Date(stat.date).toUTCString()
 

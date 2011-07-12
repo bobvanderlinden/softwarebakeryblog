@@ -105,7 +105,6 @@ function sandbox(snippet) {
   env.process.__proto__ = process;
 
   var toRun = (snippet.beforeCode ? (snippet.beforeCode + "\nclear();\n") : "") + snippet.code;
-  //console.log(toRun);
 
   try {
     snippet.lastExpression = Script.runInNewContext(toRun, env, snippet.filename);
@@ -148,6 +147,33 @@ function activateSnippets(version, snippets, canExecute, callback) {
     },
     callback
   );
+}
+
+function dbg() {
+  var name, f;
+  if (typeof arguments[0] === 'string') {
+    name = arguments[0];
+    f = arguments[1];
+  } else {
+    name = undefined;
+    f = arguments[0];
+  }
+  return function() {
+    if (name) {
+      console.log('Name:', name);
+    }
+    console.log('Function:', f.toString().split('\n')[0]);
+    var args = [];
+    for(var i = 0; i < arguments.length; i++) { args.push(arguments[i]); }
+    console.log('Arguments:', args);
+    try {
+      var result = f.apply(null, arguments);
+      console.log('Result:', result);
+    } catch(e) {
+      console.log('Exception:', e);
+      throw e;
+    }
+  };
 }
 
 // These are our data sources
@@ -203,79 +229,55 @@ var Data = module.exports = {
     )
   }),
 
-  // Loads the core data for a single article.
-  article: Git.safe(function article(version, name, callback) {
-    var props;
+  markdown: Git.safe(function markdown(version, file, filler, callback) {
     Step(
-      function getArticleMarkdown() {
-        Git.readFile(version, Path.join("articles", name + ".markdown"), this);
+      function loadFile() {
+        Git.readFile(version, file, this.parallel());
+        Git.log(file, this.parallel());
       },
-      function (err, markdown) {
-        if (err) { callback(err); return; }
-        props = preProcessMarkdown(markdown);
-        if (props.author) {
-          Data.author(version, props.author, this);
-        } else {
-          return {};
+      function loadData(err, markdown, log) {
+        if (err) { callback(err); return undefined; }
+        page = preProcessMarkdown(markdown);
+        page.name = Path.basename(file, '.markdown');
+        page.version = version;
+        page.file = file;
+        page.log = log;
+        if (Object.keys(log).length > 0) {
+          page.lastUpdated = log[Object.keys(log)[0]].date;
         }
-      },
-      function finish(err, author) {
-        if (err) { callback(err); return; }
-        props.name = name;
-        if (version !== 'fs') {
-          props.version = version;
+        if (filler) {
+          return filler(page, this.parallel());
         }
-        props.author = author;
-
-        if(props.categories != undefined){
-          props.categories = props.categories.split(',').map(function(element){ 
-            return QueryString.escape(element.trim());
-          });
-        }
-        return props;
+        return page;
       },
       callback
-    );
+    )
   }),
 
-  // Loads a full article complete with log information and executed
-  // snippets.
-  fullArticle: Git.safe(function fullArticle(version, name, callback) {
-    var article;
+  markdowns: Git.safe(function markdowns(version, dir, filler, callback) {
     Step(
-      function getBase() {
-        Data.article(version, name, this);
+      function getListOfArticles() {
+        Git.readDir(version, dir, this);
       },
-      function loadExtras(err, props) {
+      function readArticles(err, results) {
         if (err) { callback(err); return; }
-        article = props;
-        Data.articles(version, this.parallel());
-        Git.log("articles/" + name + ".markdown", this.parallel());
-        var canExecute = article.node && ("v" + process.version).indexOf(article.node) >= 0
-        canExecute = true;
-        activateSnippets(version, article.snippets, canExecute, this.parallel());
-      },
-      function finish(err, articles, log, snippets) {
-
-        if (err) { callback(err); return; }
-        article.log = log;
-        article.snippets = snippets;
-        if (Object.keys(log).length > 0) {
-          article.lastUpdated = log[Object.keys(log)[0]].date;
-        }
-
-        // Find articles with the same author
-        var related = article.related = [];
-        articles.forEach(function (otherArticle) {
-          if (otherArticle.author.name === article.author.name &&
-              otherArticle.name !== article.name) {
-            related.push(otherArticle);
-          };
+        var group = this.group();
+        results.files.forEach(function onFile(filename) {
+          if (!(/\.markdown$/.test(filename))) {
+            return;
+          }
+          Data.markdown(version, Path.join(dir, filename), filler, group());
         });
-        return article
+      },
+      function sortAndFinish(err, pages) {
+        if (err) { callback(err); return; }
+        pages.sort(function dateSorter(a, b) {
+          return (Date.parse(b.date)) - (Date.parse(a.date));
+        });
+        return pages;
       },
       callback
-    );
+    )
   }),
 
   // Loads the core data for a single author.
@@ -299,101 +301,6 @@ var Data = module.exports = {
       },
       callback
     );
-  }),
-
-  categories: Git.safe(function articles(version, callback) {
-    Step(
-      function getListOfArticles() {
-        Git.readDir(version, "articles", this);
-      },
-      function readArticles(err, results) {
-        if (err) { callback(err); return; }
-        var group = this.group();
-        results.files.forEach(function onFile(filename) {
-          if (!(/\.markdown$/.test(filename))) {
-            return;
-          }
-          var name = filename.replace(/\.markdown$/, '');
-          Data.article(version, name, group());
-        });
-      },
-      function processCategories(err, articles) {
-        if (err) { callback(err); return; }
-        var categories = articles.reduce(function (start, element) {
-          if (element && element.categories) {
-            element.categories.forEach(function(category) {
-              if(start.indexOf(category) == -1) {
-                start = start.concat(category);
-              }
-            });
-          }
-          return start;
-        }, []);
-        return categories;
-      },
-      callback
-    )
-  }),
-
-  fullArticles: Git.safe(function fullArticles(version, callback) {
-    Step(
-      function getListOfArticles() {
-        Git.readDir(version, "articles", this);
-      },
-      function readArticles(err, results) {
-        if (err) { callback(err); return; }
-        var group = this.group();
-        results.files.forEach(function onFile(filename, i) {
-          if (!(/\.markdown$/.test(filename))) {
-            return;
-          }
-          var name = filename.replace(/\.markdown$/, '');
-          var cb = group();
-          Data.fullArticle(version, name, function () {
-            return cb.apply(this, arguments);
-          });
-        });
-      },
-      function sortAndFinish(err, articles) {
-
-        if (err) { callback(err); return; }
-        articles.sort(function dateSorter(a, b) {
-          return (Date.parse(b.date)) - (Date.parse(a.date));
-        });
-
-        return articles;
-      },
-      callback
-    )
-  }),
-
-  // Loads the core data for all the articles and sorts the list by date.
-  articles: Git.safe(function articles(version, callback) {
-    Step(
-      function getListOfArticles() {
-        Git.readDir(version, "articles", this);
-      },
-      function readArticles(err, results) {
-        if (err) { callback(err); return; }
-        var group = this.group();
-        results.files.forEach(function onFile(filename) {
-          if (!(/\.markdown$/.test(filename))) {
-            return;
-          }
-          var name = filename.replace(/\.markdown$/, '');
-          Data.article(version, name, group());
-        });
-      },
-      function sortAndFinish(err, articles) {
-        if (err) { callback(err); return; }
-        articles.sort(function dateSorter(a, b) {
-          return (Date.parse(b.date)) - (Date.parse(a.date));
-        });
-        return articles;
-      },
-      callback
-    )
   })
-
 };
 

@@ -319,7 +319,7 @@ the list items to fix the size issue */
   background: -webkit-gradient(linear, 0 0, 0 90%, from(#686664), to(#444444));
   background-color: #5a5958;
   color: #fff;
-  padding: 10px 10px 10px 20px;
+  padding: 0px;
   border: 1px solid gray;
 }
 #sidebar .aside h3 {
@@ -329,8 +329,13 @@ the list items to fix the size issue */
 
   text-shadow: #ccc 1px 1px 2px;
   color: #000;
-  margin: -10px -10px 10px -20px;
-  padding: 9px 10px 8px 20px;
+  margin: 0px;
+  padding: 9px 10px 9px 20px;
+}
+#sidebar .aside > p,
+#sidebar .aside > ul {
+  padding: 10px 10px 10px 15px;
+  margin: 0px;
 }
 #sidebar .aside a, #sidebar .aside a:link, #sidebar .aside a:active {
   color: #2ca8ff;
