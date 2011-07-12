@@ -1,0 +1,20 @@
+Title: Wii Device Library released
+Author: FrozenCow
+Date: Jul 23, 2008 +0200
+
+After working on [Wii Device Library](/project/wiidevicelibrary) on and off for several months we have decided to release our work to the public. This is not the first project we have worked on together, but it is the first project we have actually decided to release. Because of this we wanted to do it right, so we came up with a couple of requirements for the release of the library.
+In this post we will describe what decisions we made to share this knowledge with others and for ourselfs to look back upon.
+
+## Project hosting
+As it’s likely we want to release more of our projects in the future, it will be helpful to have a centralized place where we can publish all these projects. That’s why we first started looking into project hosting websites such as [SourceForge](http://www.sourceforge.net/), [Google Code](http://www.sourceforge.net/) and others. We felt that the projects we would be hosting there would be unrelated to each other and we wanted more control over our content. So, we wanted our own website. But since we were taking as long as we did to publish one project, we also wanted to start as soon as possible with the content. Developing our own website would take too much time. That’s why we chose a CMS, which in our case is [WordPress](http://wordpress.org/). We chose WordPress because we could test it out on WordPress.com. There we found that it was possible to not only blog, but also create pages. And since we didn’t want to spend a lot of time making a theme, we could easily choose our theme from different theme-galleries. From here, things finally started to get rolling. We quickly found a good webhost and registered our domainname. Here we set up our own WordPress site, added a few plugins and we were ready for the next step.
+
+## Version control
+We wanted our code to be easily accessable to everyone. For this we wanted a svn repository and an one-click download system. Choosing which svn repository to use was hard at first. There were tons of providers for this, all with different features. We thought about what features we really needed, in the end we just wanted an easily accessable code repository. We have also considered different version control systems. [Subversion](http://subversion.tigris.org/) was more widely used than some of the others ([Cvs](http://www.nongnu.org/cvs/), [SourceSafe](http://msdn.microsoft.com/en-us/vstudio/aa700907.aspx) and [Bazaar](http://bazaar-vcs.org/)), so that was in line with our requirement of keeping everything easily accessable to everyone. Google Code gave us a Subversion repository, was fast and it also allowed people to browse the code online, which was just what we needed.
+
+## Download package
+The repository was finished, but we still needed a download package, which included the binaries, sourcecode and examples, that had to be a breeze to find, download and extract. For this we have put a large download-button on the project page where a zip file can be downloaded. Other archive formats aren’t that well supported accros platforms, so zip was the only right format for this. We chose to not use external download systems, because this required more searching for mirrors that would like to host our files. Handling our own downloads would result in a fast and reliable user-experience. We only need to be aware of our monthly usage.
+
+## Examples
+We wanted to make it easy to get started with the library. We found in other libraries and frameworks that the examples are a major factor in choosing the library or not. So we thought about what examples we needed to include. We divided the library in different ascpects. For each aspect we created an example that could be used as a program on its own. This makes it very easy to look into one aspect of the library without getting confused by the previous or next examples.
+
+Go check out the [Wii Device Library](/project/wiidevicelibrary), and let us know what you think.
