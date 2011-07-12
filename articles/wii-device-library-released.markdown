@@ -1,6 +1,6 @@
 Title: Wii Device Library released
 Author: FrozenCow
-Date: Jul 23, 2008 +0200
+Date: 23 Dec 2008 00:00:00 +0200
 
 After working on [Wii Device Library](/project/wiidevicelibrary) on and off for several months we have decided to release our work to the public. This is not the first project we have worked on together, but it is the first project we have actually decided to release. Because of this we wanted to do it right, so we came up with a couple of requirements for the release of the library.
 In this post we will describe what decisions we made to share this knowledge with others and for ourselfs to look back upon.
