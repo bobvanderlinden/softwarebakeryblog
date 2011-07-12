@@ -19,5 +19,6 @@
       %h3{style: "margin-right: 150px"}
         %a{href: "/" + article.name}&= article.title
       %p
-        = markdownEncode(article.markdown)
+        = intro(article.markdown)
+      %a{href: "/" + article.name} Read more...
 
