@@ -1,11 +1,10 @@
 #sidebar
   .aside
     %h3 Articles
-    %ul
+    %ul.articles
       :each article in articles.slice(0,20)
         %li
           %a{href: "/" + article.name}&=article.title
-          &=" by " + article.author.name
 #main.clearfix
   %h1
     %a{href: "/#{name}"}&= title

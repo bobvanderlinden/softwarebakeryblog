@@ -294,6 +294,16 @@ the list items to fix the size issue */
 #sidebar li {
   list-style: none;
 }
+#sidebar ul.articles a,
+#sidebar ul.projects a {
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -moz-binding: url('bindings.xml#ellipsis');
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    max-width: 100%;
+}
 #sidebar .versiontag {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
