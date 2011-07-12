@@ -27,7 +27,8 @@ var Url = require('url'),
     Git = require('git-fs'),
     Renderers = require('renderers'),
     Path = require('path'),
-    Data = require('data');
+    Data = require('data'),
+    spawn = require('child_process').spawn;
 
 var routes = [];
 
@@ -143,7 +144,7 @@ function filler(obj) {
 module.exports = function setup(repo) {
 
   // Initialize the Git Filesystem
-  Git(repo || process.cwd());
+  Git(repo = repo || process.cwd());
   // Set up our routes
   addRoute(/^\/$/, function(version, callback) {
     Renderers.markdown(version, 'description.markdown', 'index', filler({
@@ -152,6 +153,20 @@ module.exports = function setup(repo) {
       }), callback);
   });
   addRoute(/^\/feed.xml$/, Renderers.feed);
+  addRoute(/^\/4b64j3k5b6jh3bk6b$/, function(version, callback) {
+    function returnresult(r) {
+      callback(null, { headers: {}, buffer: r });
+    }
+    var p = spawn('git', ['fetch', 'origin']);
+    p.on('exit', function(code, signal) {
+      if (code !== 0) { returnresult('fetching failed'); return; }
+      p = spawn('git', ['reset', '--hard', 'origin/master']);
+      p.on('exit', function(code, signal) {
+        if (code !== 0) { returnresult('resetting failed'); return; }
+        returnresult('ok');
+      });
+    });
+  });
   addRoute(/^\/([a-z0-9_-]+)$/, function(version, article, callback) {
     Renderers.markdown(version, Path.join('articles', article + '.markdown'), 'article', filler({
       author: function(props, callback) { if (props.author) { Data.author(version, props.author, callback); } else { callback(undefined); } },
