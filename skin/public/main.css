@@ -9,6 +9,7 @@ body {
   font-family: Helvetica;
   background-color: #A6A6A6;
 }
+
 #background {
   position: absolute;
   left: 0px; right: 0px;
@@ -96,6 +97,10 @@ body {
   line-height: 12px;
   margin: 0 0 -12px 0;
 }
+#main p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
 #main img {
   float: left;
   margin: 0 10px 10px 0;
@@ -112,7 +117,8 @@ body {
 }
 
 .articlemeta {
-  margin: -20px 0 0;
+  height: 2.5em;
+  margin-bottom: 0.5em;
   font-size: 12px;
 }
 .articlemeta .date, .articlemeta .lastUpdated {
@@ -181,14 +187,19 @@ body {
 }
 #main code {
   font-family: monaco, consolas, monospace;
-  font-size: 90%;
+  font-size: 12px;
   background-color: #efeeed;
   border: 1px solid #e0e0e0;
+}
+#main p code {
+  border: 1px solid #AAA;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 #main pre {
   border: 1px solid #aaa;
   background-color: #f6f5f4;
-  margin: 0 -10px;
+  margin: 0 0px;
   display: block;
 }
 #main pre code {
@@ -207,7 +218,8 @@ body {
 #main h4,
 #main h5 {
   font-family: sans-serif;
-  margin: .5em 0;
+  margin-top: .7em;
+  margin-bottom: 0.1em;
 }
 #main h1 {
   color: #222;
@@ -227,8 +239,8 @@ body {
   font-size: 1.2em;
 }
 #main h4 {
-  color: #666;
-  font-size: 1em;
+  color: #444;
+  font-size: 0.9em;
 }
 /* Added the default paragraph style to
 the list items to fix the size issue */
@@ -243,7 +255,7 @@ the list items to fix the size issue */
   font-size: 12px;
   line-height: 12px;
   height: 12px;
-  margin: 0 -10px -24px;
+  margin: 0 0px -24px;
   background-color: #fff;
   border: 1px solid #AAA;
   padding: 5px 10px;
