@@ -428,3 +428,9 @@ html[xmlns] .clearfix {
   src: url('Artbrush.eot');
   src: local('ArtBrush'), local('ArtBrush'), url('Artbrush.woff') format('woff'), url('Artbrush.ttf') format('truetype'), url('Artbrush.svg#ArtBrush') format('svg');
 }
+@media (max-width: 700px) {
+  #main, #sidebar {
+	float: none;
+	width: auto;
+  }
+}
