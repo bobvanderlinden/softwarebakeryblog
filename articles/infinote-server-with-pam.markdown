@@ -66,7 +66,7 @@ You might have noticed a reference to the **cert.pem** and **key.pem** files. Th
 
 
 ### Authentication using PAM
-The [documentation of infinoted](http://gobby.0x539.de/trac/wiki/Infinote/Infinoted) shows the option to setup PAM but gives no hints on how to do it. There are multiple ways to setup PAM authentication with infinoted. We chose to use the [pam\_pwdfile](http://cpbotha.net/software/pam_pwdfile/) authentication module. This allows you to define users and passwords in a flat text file, so that you do not need to create full system users for them. Since all users that are in this file are solely created for use with infinote we will use the module [pam_permit](http://www.kernel.org/pub/linux/libs/pam/Linux-PAM-html/sag-pam_permit.html) to forgo account management.
+The [documentation of infinoted](http://gobby.0x539.de/trac/wiki/Infinote/Infinoted) shows the option to setup PAM but gives no hints on how to do it. There are multiple ways to setup PAM authentication with infinoted. We chose to use the [pam\_pwdfile](http://cpbotha.net/software/pam_pwdfile/) authentication module. This allows you to define users and passwords in a flat text file, so that you do not need to create full system users for them. So you need to `apt-get install libpam-pwdfile`. Since all users that are in this file are solely created for use with infinote we will use the module [pam_permit](http://www.kernel.org/pub/linux/libs/pam/Linux-PAM-html/sag-pam_permit.html) to forgo account management.
 
 We start by creating a new PAM service in the `/etc/pam.d/` directory called `infinote` and use the following as its contents:
 <h5 class='code-link'>/etc/pam.d/infinote</h5>
