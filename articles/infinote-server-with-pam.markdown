@@ -13,7 +13,7 @@ This post contains all of the steps required to run infinoted 0.5.0 on Ubuntu 10
 ### Compiling infinoted with PAM support
 Since PAM is an optional dependency for infinoted you should make sure that `libpam-dev` is installed before compiling. The configure script does not provide you with any notification of its absence (this will be fixed in a [later version](http://git.0x539.de/?p=infinote.git;a=commit;h=42e314a4af31126342aac8d5e9e3fd633630f0d4)). After that, compilation is rather straightforward:
 
-    $ apt-get install build-essential pkg-config libxml2-dev gnutls-dev libgsasl7-dev libglib2.0-dev libpam-dev
+    $ apt-get install libxml2-dev gnutls-dev libgsasl7-dev libglib2.0-dev libpam-dev
     $ wget http://releases.0x539.de/libinfinity/libinfinity-0.5.0.tar.gz
     $ tar xfvz libinfinity-0.5.0.tar.gz
     $ cd libinfinity-0.5.0
