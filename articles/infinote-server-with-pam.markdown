@@ -72,7 +72,7 @@ We start by creating a new PAM service in the `/etc/pam.d/` directory called `in
 <h5 class='code-link'>/etc/pam.d/infinote</h5>
 
     #%PAM-1.0
-    auth      required    /lib/security/pam_pwdfile.so pwdfile /etc/infinoted.passwd
+    auth      required    pam_pwdfile.so pwdfile /etc/infinoted.passwd
     account   required    pam_permit.so
 
 Now we have to create the file that defines users and their passwords, we have chose to place it at `/etc/infinoted.passwd`. The file should contain username:password_hash pairs. The password hashes can be generated using any of the following commands:
