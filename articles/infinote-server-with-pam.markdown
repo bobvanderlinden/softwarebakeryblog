@@ -11,9 +11,9 @@ On Ubuntu 10.04 infinoted 0.4.1-1 is already in the repository and it is easy to
 This post contains all of the steps required to run infinoted 0.5.0 on Ubuntu 10.04. This includes compiling, creating the user, init-script and configuration necessary to run infinoted in a proper way.
 
 ### Compiling infinoted with PAM support
-Since PAM is an optional dependency for infinoted you should make sure that `libpam-dev` is installed before compiling. The configure script does not provide you with any notification of its absence (this will be fixed in a [later version](http://git.0x539.de/?p=infinote.git;a=commit;h=42e314a4af31126342aac8d5e9e3fd633630f0d4)). After that, compilation is rather straightforward:
+Since PAM is an optional dependency for infinoted you should make sure that `libpam-dev` is installed before compiling. The configure script does not provide you with any notification of its absence (this will be fixed in a [later version](http://git.0x539.de/?p=infinote.git;a=commit;h=42e314a4af31126342aac8d5e9e3fd633630f0d4)). You should also make sure `libdaemon-dev` is installed, otherwise the initscript will not work properly. After that, compilation is rather straightforward:
 
-    $ apt-get install libxml2-dev gnutls-dev libgsasl7-dev libglib2.0-dev libpam-dev
+    $ apt-get install libxml2-dev gnutls-dev libgsasl7-dev libglib2.0-dev libpam-dev libdaemon-dev
     $ wget http://releases.0x539.de/libinfinity/libinfinity-0.5.0.tar.gz
     $ tar xfvz libinfinity-0.5.0.tar.gz
     $ cd libinfinity-0.5.0
@@ -104,54 +104,60 @@ To automatically (and easily) start and stop the infinote daemon, we will need a
     # Short-Description: starts infinoted
     # Description:       starts infinoted using start-stop-daemon
     ### END INIT INFO
-    
+
     PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
     DAEMON=/usr/bin/infinoted-0.5
     USER=infinote
     NAME=infinoted
-    DESC=infinoted
-    
+    DESC="Infinote Daemon"
+
     test -x $DAEMON || exit 0
-    
+
     if [ -f /etc/default/infinoted ] ; then
             . /etc/default/infinoted
     fi
-    
+
     set -e
-    
+
     . /lib/lsb/init-functions
-    
+
+    # Function that starts the daemon
+    d_start() {
+            log_daemon_msg "Starting $DESC" "$NAME"
+            start-stop-daemon -m --quiet -c $USER -p /var/run/$NAME.pid -x $DAEMON --start -- -d
+            log_end_msg $?
+    }
+
+    # Function that stops the daemon
+    d_stop() {
+            log_daemon_msg "Stopping $DESC" "$NAME"
+            start-stop-daemon --quiet -c $USER -p /var/run/$NAME.pid -x $DAEMON --start -- -D
+            log_end_msg $?
+    }
+
     case "$1" in
       start)
-            echo -n "Starting $DESC: "
-            start-stop-daemon --start -b -m --quiet -c $USER --pidfile /var/run/$NAME.pid \
-                    --exec $DAEMON -- $DAEMON_OPTS || true
-            echo "$NAME."
+            d_start
             ;;
       stop)
-            echo -n "Stopping $DESC: "
-            start-stop-daemon --stop --quiet -c $USER --pidfile /var/run/$NAME.pid \
-                    --exec $DAEMON || true
-            echo "$NAME."
+            d_stop
             ;;
       restart)
-            echo -n "Restarting $DESC: "
-            start-stop-daemon --start -b -m --quiet -c $USER --pidfile /var/run/$NAME.pid \
-                    --exec $DAEMON -- $DAEMON_OPTS || true
+            log_daemon_msg "Restarting $DESC" "$NAME"
+            d_stop || true
             sleep 1
-            start-stop-daemon --stop --quiet -c $USER --pidfile /var/run/$NAME.pid \
-                    --exec $DAEMON || true
-            echo "$NAME."
+            d_start
+            log_daemon_msg "Done"
             ;;
       status)
             status_of_proc -p /var/run/$NAME.pid "$DAEMON" infinoted && exit 0 || exit $?
             ;;
       *)
-            echo "Usage: $NAME {start|stop|restart}" >&2
+            log_daemon_msg "Usage: $NAME {start|stop|restart|status}" >&2
             exit 1
             ;;
     esac
-    
+
     exit 0
 
 
