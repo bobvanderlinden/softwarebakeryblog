@@ -191,7 +191,7 @@ module.exports = function setup(repo) {
   return function handle(req, res, next) {
     var error = function(err) {
       res.writeHead(404, []);
-      res.end('');
+      res.end('Not found');
     };
     var url = Url.parse(req.url);
     for (var i = 0, l = routes.length; i < l; i++) {
