@@ -189,13 +189,17 @@ module.exports = function setup(repo) {
 
 
   return function handle(req, res, next) {
+    var error = function(err) {
+      res.writeHead(404, []);
+      res.end('');
+    };
     var url = Url.parse(req.url);
     for (var i = 0, l = routes.length; i < l; i++) {
       var route = routes[i];
       var match = url.pathname.match(route.regex);
       if (match) {
         var arguments = ['fs'].concat(match.slice(1));
-        handleRoute(req, res, next, route.renderer, arguments);
+        handleRoute(req, res, error, route.renderer, arguments);
         return;
       }
     }
