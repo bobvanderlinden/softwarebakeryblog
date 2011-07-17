@@ -1,4 +1,8 @@
 @import "prettify.css";
+article, aside, footer, header, hgroup, nav, section {
+  display: block;
+}
+
 html {
   min-height: 100%;
 }

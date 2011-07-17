@@ -1,5 +1,5 @@
 #sidebar
-  .aside
+  %nav.aside
     %h3 Projects
     %ul.projects
       :each project in projects
@@ -11,8 +11,10 @@
         %li
           %a{href: "/" + article.name}&=article.title
 #main.clearfix
-  %h1
-    %a{href: "/project/#{name}"}&= title
+  %article
+    %header
+      %h1
+        %a{href: "/project/#{name}"}&= title
   = markdownEncode(markdown)
   %hr{style:"clear:both"}
   #disqus_thread.body

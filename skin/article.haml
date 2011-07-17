@@ -1,20 +1,22 @@
 #sidebar
-  .aside
+  %nav.aside
     %h3 Articles
     %ul.articles
       :each article in articles.slice(0,20)
         %li
           %a{href: "/" + article.name}&=article.title
 #main.clearfix
-  %h1
-    %a{href: "/#{name}"}&= title
-  .articlemeta
-    %span.author&= "by " + author.name
-    :if date
-      %span.date&= formatDate(date, "%l %F %j, %Y")
-    :if lastUpdated
-      %span.lastUpdated&= formatDate(lastUpdated, "%l %F %j, %Y")
-  = markdownEncode(markdown)
+  %article
+    %header
+      %h1
+        %a{href: "/#{name}"}&= title
+      .articlemeta
+        %span.author&= "by " + author.name
+        :if date
+          %time.date{datetime: formatDate(date, "%Y-%m-%d"), pubdate}&= formatDate(date, "%l %F %j, %Y")
+        :if lastUpdated
+          %time.lastUpdated{datetime: formatDate(date, "%Y-%m-%d")}&= formatDate(lastUpdated, "%l %F %j, %Y")
+    = markdownEncode(markdown)
   %hr{style:"clear:both"}
   #disqus_thread.body
   :script
