@@ -13,7 +13,7 @@
   :each article in Array.prototype.slice.apply(articles, [0,15])
     .article
       .author
-        %img{src:gravitar(article.author.email, 30)}
+        %img{src:gravitar(article.author.email, 30), alt:article.author.name}
         By #{article.author.name}
         .date{title: article.date}&= formatDate(article.date, "%Y.%m.%d")
       %h3{style: "margin-right: 150px"}
