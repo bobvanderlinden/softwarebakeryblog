@@ -109,6 +109,7 @@ To automatically (and easily) start and stop the infinote daemon, we will need a
     DAEMON=/usr/bin/infinoted-0.5
     USER=infinote
     NAME=infinoted
+    PIDFILE=/var/infinote/.infinoted/infinoted-0.5.pid
     DESC="Infinote Daemon"
 
     test -x $DAEMON || exit 0
@@ -124,14 +125,14 @@ To automatically (and easily) start and stop the infinote daemon, we will need a
     # Function that starts the daemon
     d_start() {
             log_daemon_msg "Starting $DESC" "$NAME"
-            start-stop-daemon -m --quiet -c $USER -p /var/run/$NAME.pid -x $DAEMON --start -- -d
+            start-stop-daemon --quiet -c $USER -p $PIDFILE -x $DAEMON --start -- -d
             log_end_msg $?
     }
 
     # Function that stops the daemon
     d_stop() {
             log_daemon_msg "Stopping $DESC" "$NAME"
-            start-stop-daemon --quiet -c $USER -p /var/run/$NAME.pid -x $DAEMON --start -- -D
+            start-stop-daemon --quiet -c $USER -p $PIDFILE -x $DAEMON --stop -- -D
             log_end_msg $?
     }
 
@@ -150,7 +151,7 @@ To automatically (and easily) start and stop the infinote daemon, we will need a
             log_daemon_msg "Done"
             ;;
       status)
-            status_of_proc -p /var/run/$NAME.pid "$DAEMON" infinoted && exit 0 || exit $?
+            status_of_proc -p $PIDFILE "$DAEMON" infinoted && exit 0 || exit $?
             ;;
       *)
             log_daemon_msg "Usage: $NAME {start|stop|restart|status}" >&2
