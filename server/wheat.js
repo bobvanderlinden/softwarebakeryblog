@@ -20,14 +20,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-require.paths.unshift(__dirname + "/wheat");
-
 require('proto');
 var Url = require('url'),
     Git = require('git-fs'),
-    Renderers = require('renderers'),
+    Renderers = require('./renderers'),
     Path = require('path'),
-    Data = require('data'),
+    Data = require('./data'),
     spawn = require('child_process').spawn;
 
 var routes = [];
@@ -145,6 +143,7 @@ module.exports = function setup(repo) {
 
   // Initialize the Git Filesystem
   Git(repo = repo || process.cwd());
+
   // Set up our routes
   addRoute(/^\/$/, function(version, callback) {
     Renderers.markdown(version, 'description.markdown', 'index', filler({
