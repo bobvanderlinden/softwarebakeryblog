@@ -211,6 +211,7 @@ var Data = module.exports = {
       },
       function (err, code) {
         if (err) { error(err); return; }
+				code=code.toString();
         result = {
           url: url,
           name: name,
@@ -237,6 +238,7 @@ var Data = module.exports = {
       },
       function loadData(err, markdown, log) {
         if (err) { callback(err); return undefined; }
+				markdown=markdown.toString();
         page = preProcessMarkdown(markdown);
         page.name = Path.basename(file, '.markdown');
         page.version = version;
@@ -249,7 +251,10 @@ var Data = module.exports = {
           page.lastUpdated = new Date();
         }
         if (!page.date) {
-          page.date = log[logKeys[logKeys.length-1]].date;
+					var logentry = log[logKeys[logKeys.length-1]];
+					if (logentry) {
+	          page.date = logntry.date;
+					}
         }
         if (filler) {
           return filler(page, this.parallel());
@@ -298,6 +303,7 @@ var Data = module.exports = {
       },
       function process(err, markdown) {
         if (err) { callback(err); return; }
+				markdown=markdown.toString();
         return preProcessMarkdown(markdown);
       },
       function finish(err, props) {

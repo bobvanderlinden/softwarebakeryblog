@@ -180,6 +180,7 @@ var Renderers = module.exports = {
       },
       function processFile(err, string) {
         if (err) { callback(err); return; }
+				string=string.toString();
         var headers = {
           "Content-Type": getMime(path),
           "Cache-Control": "public, max-age=32000000"
@@ -205,6 +206,7 @@ var Renderers = module.exports = {
       },
       function processFile(err, data) {
         if (err) { callback(err); return; }
+				data=data.toString();
         execPipe("dot", ["-Tpng"], data, this);
       },
       function finish(err, buffer) {
