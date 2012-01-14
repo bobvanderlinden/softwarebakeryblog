@@ -20,6 +20,8 @@
         %p Wheat running on node #{process.version}
         %p Wheat blogging engine is &copy; 2010 to Tim Caswell under the MIT license.
     :script
+      (function() {var s = document.createElement('script'), t = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true; s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto'; t.parentNode.insertBefore(s, t); })();
+    :script
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
       document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
     :script
@@ -27,5 +29,4 @@
       var pageTracker = _gat._getTracker("UA-6675737-1");
       pageTracker._trackPageview();
       } catch(err) {}
-
     #background
