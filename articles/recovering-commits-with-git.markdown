@@ -77,7 +77,7 @@ Though do remember to checkout to master when you're done going through its file
     $ git checkout master
 
 ### Lost and found
-Instead of using `git reflog` to find your lost commits, you can also use fsck to find 'dangling' commitsm for you. If we go back to our example we can do a reset again to 'lose' our latest commit:
+Instead of using `git reflog` to find your lost commits, you can also use fsck to find 'dangling' commits for you. If we go back to our example we can do a reset again to 'lose' our latest commit:
 
     $ git reset --hard 98b88cc
 
