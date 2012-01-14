@@ -132,6 +132,7 @@ var loadTemplate = Git.safe(function loadTemplate(version, name, callback) {
     },
     function compileTemplate(err, haml) {
       if (err) { callback(err); return; }
+			haml=haml.toString();
       return Haml(haml, (/\.xml$/).test(name));
     },
     callback
