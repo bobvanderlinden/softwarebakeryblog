@@ -34,7 +34,7 @@ You can see the current commits in the log:
     fd9e098 Another change to file
     98b88cc My first change
 
-Now we do our mistake and reset to the first commit:
+Now we make our mistake and reset to the first commit:
 
     $ git reset --hard HEAD~1
 
