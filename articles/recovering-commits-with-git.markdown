@@ -38,7 +38,7 @@ Now we make our mistake and reset to the first commit:
 
     $ git reset --hard HEAD~1
 
-Our second commit is now 'lost'. We can see that the file does not match the latest change we did and the log does not show our latest commit anymore:
+Our second commit is now 'lost'. We can see that the file does not match the latest change we made and the log does not show our latest commit anymore:
 
     $ cat file
     some text in a file
