@@ -4,7 +4,7 @@ Date: 13 Januari 2012 22:42:00 +0200
 
 Git is pretty powerful. With this power it allows you to do amazing things. Recently I've come to realize that you can hurt yourself pretty badly with its powers. Operations like resetting and fast-forwarding are dangarous and should be used with care.
 
-Today I did not handle them with care and commits seemed to be lost. Luckily I found that Git does not delete commits. My lost commits were just not referenced by any branch or tag, but was 'dangling'. The problem is finding these commits back.
+Today I did not handle them with care and commits seemed to be lost. Luckily I found that Git does not delete commits. My lost commits were just not referenced by any branch or tag, but were 'dangling'. The problem is finding these commits back.
 
 I found two possibilies that helped me find my lost commits: `git reflog` and `git fsck --lost-found`.
 
