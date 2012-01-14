@@ -1,4 +1,4 @@
-Title: Setting up an infinote server with PAM
+Title: Recovering commits with Git
 Author: FrozenCow
 Date: 13 Januari 2012 22:42:00 +0200
 
