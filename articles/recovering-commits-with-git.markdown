@@ -68,16 +68,16 @@ The history is now the same as before:
     fd9e098 Another change to file
     98b88cc My first change
 
-If you weren't sure it was the right commit yet, you can do a checkout of the commit to look at its files more easily:
+If you weren't sure it was the right commit yet, you can do a checkout of the commit before resetting to look at its files more easily:
 
-    $ git checkout 23b34jb53j4h5b3
+    $ git checkout fd9e098
 
-Though do remember to checkout to master when you're done going through its files:
+Though do remember to checkout to your previous branch when you're done going through its files:
 
     $ git checkout master
 
 ### Lost and found
-Instead of using `git reflog` to find your lost commits, you can also use fsck to find 'dangling' commits for you. If we go back to our example we can do a reset again to 'lose' our latest commit:
+Instead of using `git reflog` to find your lost commits, you can also use Git's fsck to find 'dangling' commits for you. If we go back to our example we can do a reset again to 'lose' our latest commit:
 
     $ git reset --hard 98b88cc
 
