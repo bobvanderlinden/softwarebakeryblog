@@ -6,7 +6,7 @@ DriveDroid allows you to boot your PC from ISO/IMG files stored on your phone. T
 
 DriveDroid also includes a convenient download menu where you can select a popular distibution to download and use.
 
-How do you make this work?
+## How do you make this work?
 
 * Connect your phone to your PC using an USB cable
 * Download an image file (.iso or .img) through DriveDroid or download them manually
@@ -14,13 +14,13 @@ How do you make this work?
 * (Re)start your PC and make sure the correct boot priority is set in the bios
 * The image should now be booted on your PC
 
-Requirements:
+## Requirements
 
 * Root
 * USB cable (from phone to PC)
 * USB Mass Storage-support should be enabled on your ROM (being able to mount SD card)
 
-Notes:
+## Notes
 
 * Some .iso files do not support being booted over USB, but most popular distibutions are. All images that are downloadable through DriveDroid are supported.
 * All .img files should work fine.
