@@ -2,7 +2,7 @@ Title: DriveDroid 0.6.2 released
 Author: FrozenCow
 Date: 09 December 2012 23:13:00 +0200
 
-Since the first release of DriveDroid many has changed. Now with version 0.6.2 we have a number of new distributions available in the downloadlist:
+Since the first release of DriveDroid much has changed. Now with version 0.6.2 we have a number of new distributions available in the downloadlist:
 
 * Arch Linux
 * Crunchbang
