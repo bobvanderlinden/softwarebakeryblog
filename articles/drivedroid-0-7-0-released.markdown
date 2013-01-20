@@ -1,6 +1,6 @@
 Title: DriveDroid 0.7.0 released
 Author: FrozenCow
-Date: 20 Januari 2012 23:01:00 +0200
+Date: 20 Januari 2013 23:01:00 +0200
 
 Version 0.7.0 of [DriveDroid (Free)](https://play.google.com/store/apps/details?id=com.softwarebakery.drivedroid) and [DriveDroid (Paid)](https://play.google.com/store/apps/details?id=com.softwarebakery.drivedroid.paid) is just released. This version comes with quite a few changes. Here is the changelog:
 
