@@ -170,10 +170,12 @@ var Renderers = module.exports = {
   staticFile: Git.safe(function staticFile(version, path, callback) {
     Step(
       function loadPublicFiles() {
+        console.log("staticFile: skin/public/" + path);
         Git.readFile(version, "skin/public/" + path, this);
       },
       function loadArticleFiles(err, data) {
         if (err) {
+          console.log("staticFile: articles/" + path);
           Git.readFile(version, "articles/" + path, this);
         }
         return data;
