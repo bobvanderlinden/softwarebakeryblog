@@ -107,6 +107,7 @@ function addRoute(regex, renderer) {
 function handleRoute(req, res, next, renderer, match) {
   function callback(err, data) {
     if (err) {
+			console.log(err);
       return err.errno === process.ENOENT
         ? next()
         : next(err);
