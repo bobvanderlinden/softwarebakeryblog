@@ -20,7 +20,7 @@ Note that on some systems [diskpart](http://support.microsoft.com/kb/300415) is 
 
 # Image creation
 
-First hook up your phone to your PC using an USB cable.
+First hook up your phone to your PC using a USB cable.
 
 Next we'll have to create a blank image on your phone. On this image we will eventually store the installation disk. In DriveDroid we go to the + button and choose 'Create blank image...'.
 
