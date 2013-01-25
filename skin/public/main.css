@@ -106,7 +106,6 @@ body {
   margin-bottom: 0.5em;
 }
 #main img {
-  float: left;
   margin: 0 10px 10px 0;
 }
 #main hr {
@@ -436,6 +435,18 @@ the list items to fix the size issue */
 .clearfix {
   display: inline-block;
 }
+.box {
+  border: 1px #A3A2A1 solid;
+  background-color: #F3F2F1;
+  padding: 10px;
+  margin: 10px;
+}
+.center {
+  float: none;
+  clear: both;
+  text-align: center;
+}
+
 html[xmlns] .clearfix {
   display: block;
 }
