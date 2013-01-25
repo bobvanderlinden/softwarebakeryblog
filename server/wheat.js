@@ -178,13 +178,14 @@ module.exports = function setup(repo) {
       projects: getProjects(version)
     }), callback);
   });
-  addRoute(/^\/project\/([a-z0-9_-]+)$/, function(version, projectName, callback) {
-    Renderers.markdown(version, Path.join('projects', projectName + '.markdown'), 'project', filler({
-      author: function(props, callback) { if (props.author) { Data.author(version, props.author, callback); } else { callback(null, props.author); } },
+  addRoute(/^\/([a-z0-9_-]+)$/, function(version, article, callback) {
+    Renderers.markdown(version, Path.join('articles', article + '.markdown'), 'article', filler({
+      author: function(props, callback) { if (props.author) { Data.author(version, props.author, callback); } else { callback(undefined); } },
       articles: getArticles(version),
       projects: getProjects(version)
     }), callback);
   });
+  addRoute(/^\/([a-z0-9_-]+\/[a-z0-9_\\-\\.]+)$/, Renderers.staticFile);
   addRoute(/^\/(.+\.[a-z]{2,4})$/, Renderers.staticFile);
 
 
