@@ -69,8 +69,8 @@ The following code demonstrates how we can use a Wiimote device after connecting
 ### Releases
 
 * [v1.0](/files/WiiDeviceLibrary-1.0.zip)
-* [v1.1](/files/WiiDeviceLibrary-1.1.zip)
-* [v1.2](/files/WiiDeviceLibrary-1.2.zip)
+* [v1.1](/files/WiiDeviceLibrary-v1.1.zip)
+* [v1.2](/files/WiiDeviceLibrary-v1.2.zip)
 
 The full changelog is available at [Google Code](http://code.google.com/p/wiidevicelibrary/source/list).
 
