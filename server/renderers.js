@@ -186,6 +186,9 @@ var Renderers = module.exports = {
           "Content-Type": getMime(path),
           "Cache-Control": "public, max-age=32000000"
         };
+        if (typeof data === 'string') {
+                data = new Buffer(data,'binary');
+        }
         postProcess(headers, data, version, path, this);
       },
       callback
