@@ -38,11 +38,11 @@ It is recommended not to do anything else on your phone while the image is being
 
 <img src="windows-install-on-drivedroid/drivedroid03.png" class="box" />
 
-Once the image is created go to DriveDroid and select the image in the main screen.
+Once the image is created go to DriveDroid.
 
 # Partitioning and formatting
 
-As soon as we selected the image in DriveDroid, Windows will find a new USB drive. A window will popup in Windows asking to format the drive.
+Select the image in DriveDroid and click the option that says '(read-write)'. As soon as we have done that, Windows will find a new USB drive. A window will popup in Windows asking to format the drive.
 
 <img src="windows-install-on-drivedroid/01.png" class="box" />
 
