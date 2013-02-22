@@ -99,8 +99,8 @@ Here we will see an output similar to the following:
 
 Note two things in the output:
 
-* The partition ends on block 9181183 (shown under End)
-* The block-size is 512 bytes (shown as "sectors of 1 * 512")
+* The partition ends on block 9181183 (shown under `End`)
+* The block-size is 512 bytes (shown as `sectors of 1 * 512`)
 
 We will use these numbers in the rest of the example, but 512 is often the same, but 9181183 will differ for you. The numbers mean that the parition ends on byte 9181183\*512 of the file. After that byte comes the unallocated-part. Only the first 9181183\*512 bytes will be useful for our image.
 
