@@ -10,7 +10,7 @@ This post will show how to shrink an existing image to a more optimal size. We w
 
 * A Linux PC
 * Some knowledge how the terminal works will helps
-* The unoptimal image (`myimage.img' in this example)
+* The unoptimal image (`myimage.img` in this example)
 
 # Creating loopback device
 
@@ -26,17 +26,17 @@ Now we can request a new (free) loopback device:
 
     $ sudo losetup -f
 
-This will return the path to a free loopback device. In this example this is `/dev/loop0'.
+This will return the path to a free loopback device. In this example this is `/dev/loop0`.
 
 Next we create a device of the image:
 
     $ sudo losetup /dev/loop0 myimage.img
 
-Now we have a device `/dev/loop0' that represents `myimage.img'. We want to access the partitions that are on the image, so we need to ask the kernel to load those too:
+Now we have a device `/dev/loop0` that represents `myimage.img`. We want to access the partitions that are on the image, so we need to ask the kernel to load those too:
 
     $ sudo partprobe /dev/loop0
 
-This should give us the device `/dev/loop0p1', which represents the first partition in `myimage.img'. We do not need this device directly, but GParted requires it.
+This should give us the device `/dev/loop0p1`, which represents the first partition in `myimage.img`. We do not need this device directly, but GParted requires it.
 
 # Resize partition using GParted
 
@@ -82,7 +82,7 @@ Now that we have all the important data at the beginning of the image it is time
 
 Sidenote, for this I will use dd. This method is not optimal, since we will copy the first part of the image over to a new image. The new image will only contain the important data and not the unallocated part. If you know a nice way in bash to just set the size of the file, please enlighten me in the comments!
 
-We will copy the image over to another file but we will leave out the unallocated part (which is the last part of the image). We will first need to know where our partition ends and where the unallocated part begins. We do this using `fdisk':
+We will copy the image over to another file but we will leave out the unallocated part (which is the last part of the image). We will first need to know where our partition ends and where the unallocated part begins. We do this using `fdisk`:
 
     $ fdisk -l myimage.img
 
