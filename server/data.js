@@ -253,7 +253,7 @@ var Data = module.exports = {
         if (!page.date) {
 					var logentry = log[logKeys[logKeys.length-1]];
 					if (logentry) {
-	          page.date = logntry.date;
+	          page.date = logentry.date;
 					}
         }
         if (filler) {
