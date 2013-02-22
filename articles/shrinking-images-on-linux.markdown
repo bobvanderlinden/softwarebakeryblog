@@ -4,7 +4,7 @@ Date: 21 February 2013 16:53:00 +0200
 
 When creating images from existing ISOs you often need to allocate a number of MB for the image to *at least* fit the files that are in the ISO. Predicting the exact size of the image is hard, even for a program. In this case you will create an image that is larger than actually needed: the image is much larger than the files on the image are combined.
 
-This post will show how to shrink an existing image to a more optimal size. We will do this on Linux, since all required tools are available there: GParted, fdisk and dd.
+This post will show how to shrink an existing image to a more optimal size. We will do this on Linux, since all required tools are available there: GParted, `fdisk` and `dd`.
 
 # Requirements
 
@@ -80,7 +80,7 @@ Now we don't need the loopback-device anymore, so unload it:
 
 Now that we have all the important data at the beginning of the image it is time to shave of that unallocated part.
 
-Sidenote, for this I will use dd. This method is not optimal, since we will copy the first part of the image over to a new image. The new image will only contain the important data and not the unallocated part. If you know a nice way in bash to just set the size of the file, please enlighten me in the comments!
+Sidenote, for this I will use `dd`. This method is not optimal, since we will copy the first part of the image over to a new image. The new image will only contain the important data and not the unallocated part. If you know a nice way in bash to just set the size of the file, please enlighten me in the comments!
 
 We will copy the image over to another file but we will leave out the unallocated part (which is the last part of the image). We will first need to know where our partition ends and where the unallocated part begins. We do this using `fdisk`:
 
