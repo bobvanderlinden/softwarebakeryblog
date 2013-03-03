@@ -1,10 +1,7 @@
-//require('proto');
-var //Url = require('url'),
-    Git = require('git-fs'),
+var Git = require('git-fs'),
     Renderers = require('./renderers'),
     Path = require('path'),
     Data = require('./data'),
-    //spawn = require('child_process').spawn,
     fs = require('fs');
 
 function mkdir_p(path, mode, callback, position) {

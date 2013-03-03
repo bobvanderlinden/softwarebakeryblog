@@ -234,28 +234,14 @@ var Data = module.exports = {
     Step(
       function loadFile() {
         Git.readFile(version, file, this.parallel());
-        Git.log(file, this.parallel());
       },
-      function loadData(err, markdown, log) {
+      function loadData(err, markdown) {
         if (err) { callback(err); return undefined; }
 				markdown=markdown.toString();
         page = preProcessMarkdown(markdown);
         page.name = Path.basename(file, '.markdown');
         page.version = version;
         page.file = file;
-        page.log = log;
-        var logKeys = Object.keys(log);
-        if (logKeys.length > 0) {
-          page.lastUpdated = log[logKeys[0]].date;
-        } else {
-          page.lastUpdated = new Date();
-        }
-        if (!page.date) {
-					var logentry = log[logKeys[logKeys.length-1]];
-					if (logentry) {
-	          page.date = logentry.date;
-					}
-        }
         if (filler) {
           return filler(page, this.parallel());
         }

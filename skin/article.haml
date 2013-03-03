@@ -15,8 +15,6 @@
         %span.author&= "by " + author.name
         :if date
           %time.date{datetime: formatDate(date, "%Y-%m-%d"), pubdate}&= formatDate(date, "%l %F %j, %Y")
-        :if lastUpdated
-          %time.lastUpdated{datetime: formatDate(date, "%Y-%m-%d")}&= formatDate(lastUpdated, "%l %F %j, %Y")
     = markdownEncode(markdown)
   %hr{style:"clear:both"}
   #disqus_thread.body
