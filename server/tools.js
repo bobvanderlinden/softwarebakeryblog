@@ -178,6 +178,7 @@ function render(name, data, callback, partial) {
       var content = template(data);
       if (partial) { return stringToBuffer(content); }
       data = {
+        projects: data.projects,
         content: content,
         title: data.title || ""
       };

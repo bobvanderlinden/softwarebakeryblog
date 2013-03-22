@@ -2,23 +2,41 @@
 %html(lang="en" xmlns="http://www.w3.org/1999/xhtml")
   %head
     %meta(http-equiv="content-type" content="text/html; charset=UTF-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
     %title #{(title ? title + " - " : "")}Softwarebakery
     %link(href="/main.css" rel="stylesheet")
     %link(href="/print.css" rel="stylesheet" media="print")
     %link(rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/feed.xml")
     %link(href="/favicon.ico" rel="icon" type="image/x-icon")
     %link(href="http://fonts.googleapis.com/css?family=Redressed&v1" rel="stylesheet" type="text/css")
+    %link(rel="bitcoin" href="bitcoin:812b35ffb540813c2f8e855bf20d9071")
+    %link(rel="payment" href="https://flattr.com/submit/auto?url=https%3A%2F%2Fdevelopers.flattr.net%2F&amp;user_id=flattr" type="text/html")
   %body
     #container
       %header#header
         %a{href: "/"}
           %h1
             Softwarebakery
+      #sidebar
+        %nav.aside
+          %ul
+            %li
+              %a{href:"/"} Blog
+            %li.submenu
+              %span Projects
+              %ul
+                :each project in projects
+                  %li
+                    %a{href:"/projects/"+project.name}= project.title
+            %li
+              %a{href:"/donate"} Donate
+            %li
+              %a{href:"/contact"} Contact
+            %li
+              %a{href:"/feed.xml"} RSS
       = content
       
       %footer#footer.clearfix
-        %p Wheat running on node #{process.version}
-        %p Wheat blogging engine is &copy; 2010 to Tim Caswell under the MIT license.
     :script
       (function() {var s = document.createElement('script'), t = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true; s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto'; t.parentNode.insertBefore(s, t); })();
     :script
@@ -30,3 +48,8 @@
       pageTracker._trackPageview();
       } catch(err) {}
     #background
+:script
+    /*var interval = setInterval(function() {
+      window.location.reload();
+    }, 3000);
+    document.body.onmousemove = function() { window.clearInterval(interval); };*/

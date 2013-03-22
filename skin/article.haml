@@ -1,16 +1,10 @@
-#sidebar
-  %nav.aside
-    %h3 Articles
-    %ul.articles
-      :each article in articles.slice(0,20)
-        %li
-          %a{href: "/" + article.name}&=article.title
 #main.clearfix
   %article
     %header
+      %div.share
+        %a.FlattrButton{style:"display:none",title:title,href:"http://softwarebakery.com/"+name,data-flattr-uid:author.name,data-flattr-button:"compact",data-flattr-category:"text"}&= intro(markdown)
       %h1
         %a{href: "/#{name}"}&= title
-      %a.FlattrButton{style:"display:none",title:title,href:"http://softwarebakery.com/"+name,data-flattr-uid:author.name,data-flattr-button:"compact",data-flattr-category:"text"}&= intro(markdown)
       .articlemeta
         %span.author&= "by " + author.name
         :if date

@@ -71,9 +71,7 @@ function postProcess(headers, buffer, version, path, callback) {
           }
         ));
       }
-
       headers["Content-Length"] = buffer.length;
-
       return {
         headers: headers,
         buffer: buffer
@@ -128,6 +126,29 @@ function dbg() {
 }
 
 var Renderers = module.exports = {
+  haml: Git.safe(function haml(version, templateName, filler, callback) {
+    Step(
+      function applyFiller() {
+        if (filler) {
+          return filler({}, this);
+        }
+      },
+      function applyTemplate(err,data) {
+        if (err) { callback(err); return; }
+        Tools.render(templateName, data, this);
+      },
+      function callPostProcess(err, buffer) {
+        if (err) { callback(err); return; }
+        postProcess({
+          "Cache-Control": "public, max-age=3600"
+        }, buffer, version, undefined, this);
+      },
+      function(err,result) {
+        return callback(err, result);
+      }
+    );
+  }),
+
   markdown: Git.safe(function markdown(version, file, templateName, filler, callback) {
     Step(
       function loadMarkdown() {
@@ -154,7 +175,7 @@ var Renderers = module.exports = {
       },
       function applyTemplate(err, page) {
         if (err) { callback(err); return; }
-        Tools.render(templateName, page, this);
+        Tools.render(templateName, page, this, true);
       },
       function finish(err, buffer) {
         if (err) { callback(err); return; }
@@ -170,12 +191,10 @@ var Renderers = module.exports = {
   staticFile: Git.safe(function staticFile(version, path, callback) {
     Step(
       function loadPublicFiles() {
-        console.log("staticFile: skin/public/" + path);
         Git.readFile(version, "skin/public/" + path, this);
       },
       function loadArticleFiles(err, data) {
         if (err) {
-          console.log("staticFile: articles/" + path);
           Git.readFile(version, "articles/" + path, this);
         }
         return data;

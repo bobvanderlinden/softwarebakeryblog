@@ -2,41 +2,11 @@ var Git = require('git-fs'),
     Renderers = require('./renderers'),
     Path = require('path'),
     Data = require('./data'),
+    mkdirp = require('mkdirp'),
     fs = require('fs');
 
-function mkdir_p(path, mode, callback, position) {
-    mode = mode || 0777;
-    position = position || 0;
-    parts = require('path').normalize(path).split('/');
- 
-    if (position >= parts.length) {
-        if (callback) {
-            return callback();
-        } else {
-            return true;
-        }
-    }
- 
-    var directory = parts.slice(0, position + 1).join('/');
-    fs.stat(directory, function(err) {
-        if (err === null) {
-            mkdir_p(path, mode, callback, position + 1);
-        } else {
-            fs.mkdir(directory, mode, function (err) {
-                if (err) {
-                    if (callback) {
-                        return callback(err);
-                    } else {
-                        throw err;
-                    }
-                } else {
-                    mkdir_p(path, mode, callback, position + 1);
-                }
-            })
-        }
-    });
-}
-
+var outputdir = process.argv[2] || 'target/development-build';
+console.log(outputdir);
 function fill(/*initial obj, { name: function ... }, ... arguments ..., callback*/) {
   var result = arguments[0];
   var funcs = arguments[1];
@@ -74,7 +44,10 @@ function getArticles(version) {
 
 function getProjects(version) {
   return function(p, callback) {
-    Data.markdowns(version, 'projects', undefined, callback);
+    Data.markdowns(version, 'projects', undefined, function(err,projects) {
+      projects = projects.sort(function(a,b) { return a.name === b.name ? 0 : (a.name > b.name ? 1 : -1); });
+      callback(err,projects);
+    });
   };
 }
 
@@ -88,9 +61,10 @@ Git(process.cwd());
 var version = 'fs';
 
 function writeTo(file) {
-	var path = 'output/'+file;
+	var path = Path.join(outputdir,file);
 	return function(err,result) {
-		mkdir_p(Path.dirname(path), null, function() {
+    if (err) { console.error('Error:', err); return; }
+		mkdirp(Path.dirname(path), function() {
 			var s = fs.createWriteStream(path);
 			s.write(result.buffer);
 			s.end();
@@ -99,9 +73,10 @@ function writeTo(file) {
 }
 
 function copyDir(src,dst,callback) {
+  console.log(src,'->',dst);
 	fs.readdir(src,function(err,entries) {
 		if (err) { return callback(err); }
-		fs.mkdir(dst,function() {
+		mkdirp(dst,function() {
 			entries.forEach(function(entry) {
 				var srcs = fs.createReadStream(src+'/'+entry)
 				var dsts = fs.createWriteStream(dst+'/'+entry);
@@ -111,14 +86,28 @@ function copyDir(src,dst,callback) {
 	});
 }
 
+Renderers.haml(version, 'donate', filler({
+  articles: getArticles(version),
+  projects: getProjects(version)
+}), writeTo('donate.html'));
+
 Renderers.markdown(version, 'description.markdown', 'index', filler({
 	articles: getArticles(version),
 	projects: getProjects(version)
 }), writeTo('index.html'));
 
 Renderers.rssmarkdown(version, 'description.markdown', 'feed.xml', filler({
-	articles: getArticles(version)
+	articles: getArticles(version),
+  projects: getProjects(version)
 }), writeTo('feed.xml'));
+
+Renderers.markdown(version, Path.join('projects.markdown'), 'projects', filler({
+  projects: getProjects(version)
+}), writeTo('projects.html'));
+
+Renderers.markdown(version, Path.join('contact.markdown'), 'markdownpage', filler({
+  projects: getProjects(version)
+}), writeTo('contact.html'));
 
 getProjects(version)(null,function(err,projects) {
 	projects.forEach(function(project) {
@@ -126,7 +115,9 @@ getProjects(version)(null,function(err,projects) {
 			author: function(props, callback) { if (props.author) { Data.author(version, props.author, callback); } else { callback(null, props.author); } },
 			articles: getArticles(version),
 			projects: getProjects(version)
-		}), writeTo('project/'+project.name+'.html'));
+		}), writeTo('projects/'+project.name+'.html'));
+
+    copyDir('projects/'+project.name, Path.join(outputdir,'projects',project.name),function(){})
 	});
 });
 
@@ -138,8 +129,8 @@ getArticles(version)(null,function(err,articles) {
 			projects: getProjects(version)
 		}), writeTo(article.name+'.html'));
 
-		copyDir('articles/'+article.name, 'output/'+article.name,function(){})
+		copyDir('articles/'+article.name, Path.join(outputdir,article.name),function(){})
 	});
 });
 
-copyDir('skin/public','output',function(){});
+copyDir('skin/public',outputdir,function(){});

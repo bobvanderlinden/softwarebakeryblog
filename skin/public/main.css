@@ -43,7 +43,7 @@ body {
   color: #000;
   text-decoration: none;
 }
-#header H1 {
+#header h1 {
   font-family: /*'Permanent Marker',*/ Redressed, sans-serif, serif;
   text-shadow: #666666 1px 1px 2px;
   /*font-weight: bold;*/
@@ -76,6 +76,7 @@ body {
 #footer.clearfix{
   clear:both;
 }
+
 #main {
   -moz-box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.5);
@@ -105,7 +106,7 @@ body {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
-#main img {
+#main > img {
   margin: 0 10px 10px 0;
 }
 #main hr {
@@ -118,9 +119,8 @@ body {
   font-size: 12px;
   line-height: 1.5em;
 }
-.FlattrButton {
-	position: absolute;
-	margin-left: 90px;
+.share {
+	float: right;
 }
 .articlemeta {
   height: 2.5em;
@@ -208,6 +208,12 @@ body {
   margin: 0 0px;
   display: block;
 }
+#main pre.scrollable {
+  height: 20em;
+}
+.scrollable {
+  overflow-y: scroll;
+}
 #main pre code {
   overflow-x: auto;
   max-height: 600px;
@@ -260,6 +266,11 @@ body {
   margin-top: 0.9em;
   font-size: 0.9em;
 }
+
+#main h1 a, #main h2 a, #main h3 a {
+  text-shadow: 1px 1px rgba(22, 84, 167, 0.2)
+}
+
 /* Added the default paragraph style to
 the list items to fix the size issue */
 #main p, #main li {
@@ -291,6 +302,23 @@ the list items to fix the size issue */
   margin-bottom:7px;
   border-bottom:1px solid #ddd;
 }
+
+.gallery {
+  height: 25%;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.gallery img {
+  height: 40%;
+  -moz-box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.5);
+  margin: 10px; padding: 0;
+}
+
 #sidebar {
   margin-left:0;
   float: right;
@@ -318,11 +346,36 @@ the list items to fix the size issue */
   padding: 0;
 }
 #sidebar ul {
-  padding: 0 0 0 0px;
-  margin: 0;
+  padding: 0px;
+  margin: 0px;
 }
 #sidebar li {
   list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+#sidebar li a {
+  padding: .8em 15px;
+  display: block;
+}
+#sidebar li span {
+  cursor: default;
+  color: rgba(0, 0, 0, 0.4);
+  padding: .3em 15px;
+  font-weight: bold;
+  display: inline-block;
+}
+#sidebar li:first-child {
+  border-top: 0px solid black;
+}
+#sidebar li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+#sidebar ul ul li {
+  border-top: 1px solid rgba(255, 255, 255, 0.01);
+}
+#sidebar ul ul li a {
+  padding: .4em 15px;
+  background: rgba(0,0,0,0.15);
 }
 #sidebar ul.articles a,
 #sidebar ul.projects a {
@@ -361,6 +414,7 @@ the list items to fix the size issue */
   color: #fff;
   padding: 0px;
   border: 1px solid gray;
+  border-radius: 0px 10px 10px 0px;
 }
 #sidebar .aside h3 {
   background-color: rgba(255, 255, 255, 0.4);
@@ -372,11 +426,6 @@ the list items to fix the size issue */
   margin: 0px;
   padding: 9px 10px 9px 20px;
 }
-#sidebar .aside > p,
-#sidebar .aside > ul {
-  padding: 10px 10px 10px 15px;
-  margin: 0px;
-}
 #sidebar .aside a, #sidebar .aside a:link, #sidebar .aside a:active {
   color: #2ca8ff;
   font-weight: bold;
@@ -386,43 +435,9 @@ the list items to fix the size issue */
   color: #37d2ff;
   text-decoration: underline;
 }
-#sidebar .bubble {
-  margin: 20px 0 0 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  padding: 10px;
-  background: -moz-linear-gradient(top, #ffffff, #bcbab8);
-  background: -webkit-gradient(linear, 0 0, 0 90%, from(#ffffff), to(#bcbab8));
-  background-color: #d5d3d2;
-}
-#sidebar .bubble h3 {
-  text-shadow: #000 1px 1px 3px;
-  -webkit-border-top-left-radius: 10px;
-  -moz-border-radius-topleft: 10px;
-  border-top-left-radius: 10px;
-  -webkit-border-top-right-radius: 10px;
-  -moz-border-radius-topright: 10px;
-  border-top-right-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.4);
-  background-color: #939392;
-  /*Only for IE*/
 
-  color: #F3F3F3;
-  margin: -9px -9px 10px -9px;
-  padding: 9px 10px 8px 10px;
-  border-bottom: 1px solid #aaa;
-}
-#sidebar .sponsor {
-  padding: 20px 10px 10px 20px;
-  text-align: center;
-  display: block;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-}
-#sidebar .sponsor img {
-  border: 0;
+#sidebar li li a {
+
 }
 .clearfix:after {
   content: ".";
@@ -458,9 +473,69 @@ html[xmlns] .clearfix {
   src: url('Artbrush.eot');
   src: local('ArtBrush'), local('ArtBrush'), url('Artbrush.woff') format('woff'), url('Artbrush.ttf') format('truetype'), url('Artbrush.svg#ArtBrush') format('svg');
 }
+
 @media (max-width: 700px) {
+  #header h1 {
+    font-size: 50px;
+    text-align: center;
+    display: block;
+    margin: 5px;
+    padding: 0;
+  }
+  .share {
+    float: none;
+  }
+  #main h1 {
+    margin-top: 0;
+  }
+  #main {
+    min-height: 0;
+    min-width: 0;
+    width: auto;
+    padding: 10px 20px;
+  }
+  #container {
+    min-width: 0;
+  }
+  /*div.author { display: none; }*/
   #main, #sidebar {
-	float: none;
-	width: auto;
+  float: none;
+  width: auto;
+  }
+  #sidebar .aside {
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+  }
+  #sidebar ul {
+    display: block;
+  }
+  #sidebar ul span {
+    display: none;
+  }
+  #sidebar ul ul {
+    display: inline-block;
+  }
+  #sidebar ul ul li {
+    border-top: 0;
+  }
+  #sidebar ul ul li a {
+    padding: .8em 15px;
+    background: transparent;
+  }
+  #sidebar li {
+    display: inline-block;
+
+    background: -webkit-gradient(linear, 0 0, 0 90%, from(#686664), to(#444444));
+    border-radius: 5px;
+    margin: 3px;
+    border-top: 0;
+  }
+  #main img {
+    max-width: 85%;\
+  }
+  #sidebar .submenu {
+    background: transparent;
+    display: inline;
   }
 }
