@@ -513,13 +513,15 @@ html[xmlns] .clearfix {
     display: none;
   }
   #sidebar ul ul {
-    display: inline-block;
+    display: inline;
+    margin: 0;
+    padding: 0;
   }
   #sidebar ul ul li {
     border-top: 0;
   }
-  #sidebar ul ul li a {
-    padding: .8em 15px;
+  #sidebar ul li a, #sidebar ul ul li a {
+    padding: .8em .5em;
     background: transparent;
   }
   #sidebar li {
@@ -530,11 +532,23 @@ html[xmlns] .clearfix {
     margin: 3px;
     border-top: 0;
   }
+  .gallery img {
+    height: auto;
+  }
+  .gallery img.landscape {
+    max-width: 300%;
+  }
   #main img {
-    max-width: 85%;\
+    max-width: 85%;
   }
   #sidebar .submenu {
     background: transparent;
     display: inline;
+    margin: 0;
+    padding: 0;
+  }
+  #main .author {
+    margin: 0px;
+    float: right;
   }
 }

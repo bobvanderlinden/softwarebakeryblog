@@ -16,7 +16,7 @@ If you like DriveDroid, feel free to [donate](/donate).
     <img src="drivedroid/drivedroid-20130322T183128.png" />
     <img src="drivedroid/drivedroid-20130322T183906.png" />
     <img src="drivedroid/drivedroid-20130322T183146.png" />
-    <img src="drivedroid/drivedroid-20130322T183212.png" />
+    <img src="drivedroid/drivedroid-20130322T183212.png" class="landscape" />
 </div>
 
 ## How do you make this work?
