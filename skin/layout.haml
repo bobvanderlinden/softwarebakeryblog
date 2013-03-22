@@ -36,21 +36,17 @@
       = content
       
       %footer#footer.clearfix
-    :script
-      (function() {var s = document.createElement('script'), t = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true; s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto'; t.parentNode.insertBefore(s, t); })();
-    :script
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-6675737-1']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
     #background
 :script
-    /*var interval = setInterval(function() {
-      window.location.reload();
-    }, 3000);
-    document.body.onmousemove = function() { window.clearInterval(interval); };*/
+  (function() {
+    function ll(url) {
+      var s = document.createElement('script'), t = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true; s.src = url; var t = document.getElementsByTagName('script')[0]; t.parentNode.insertBefore(s, t);
+    }
+    ll('/main.js');
+    ll('http://api.flattr.com/js/0.6/load.js?mode=auto');
+
+    var _gaq = window._gaq = window._gaq || [];
+    _gaq.push(['_setAccount', 'UA-6675737-1']);
+    _gaq.push(['_trackPageview']);
+    ll(('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js');
+  })();
