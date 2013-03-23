@@ -51,6 +51,15 @@ DriveDroid requires root, an USB cable and a phone which can potentially support
 ## Version history
 
 <pre class="scrollable">
+v0.7.6
+* Replaced UMS-switch with USB-mode list
+* Added check for Android Debugging
+* Added extension for image creation
+* Added website and donation button
+* Tweaked image creation so that it doesn't hog the system
+* Fixed rare crash (AdMob bug)
+* Fixed rare crash (freeSpace)
+
 v0.7.5
 * Fixed compatiblity with pre-jellybean Android phones
 
