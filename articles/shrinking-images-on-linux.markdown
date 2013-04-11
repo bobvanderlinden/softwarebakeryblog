@@ -102,14 +102,10 @@ Note two things in the output:
 * The partition ends on block 9181183 (shown under `End`)
 * The block-size is 512 bytes (shown as `sectors of 1 * 512`)
 
-We will use these numbers in the rest of the example, but 512 is often the same, but 9181183 will differ for you. The numbers mean that the parition ends on byte 9181183\*512 of the file. After that byte comes the unallocated-part. Only the first 9181183\*512 bytes will be useful for our image.
+We will use these numbers in the rest of the example. The block-size (512) is often the same, but the ending block (9181183) will differ for you. The numbers mean that the parition ends on byte 9181183\*512 of the file. After that byte comes the unallocated-part. Only the first 9181183\*512 bytes will be useful for our image.
 
-We will copy that first 9181183*512 bytes to a new file called `myimage_shrinked.img`. Note that `dd` accepts a count argument which we will fill in as the end of the partition + 1. In this example that is `9181183 + 1 = 9181184`:
+Next we shrink the image-file to a size that can just contain the partition. For this we will use the `truncate` command (thanks uggla!). With the truncate command need to supply the size of the file in bytes. The last block was 9181183 and block-numbers start at 0. That means we need (9181183+1)*512 bytes. This is important, else the partition will not fit the image. So now we use truncate with the calculations:
 
-    $ dd if=myimage.img of=myimage_shrinked.img bs=512 count=9181184
+    $ truncate --size=$[(9181183+1)*512] myimage.img
 
-Sidenote: `dd` will do 9181184 write operations, each time it writes 512 bytes: a total of 9181184\*512 bytes.
-
-When `dd` is finished, the new image `myimage_shrinked.img` should now be 9181184*512 bytes, whereas the original in this example is 6144000000 bytes.
-
-Now copy the new image over to your phone, where it will act exactly the same as the old and big image did.
+Now copy the new image over to your phone, where it should act exactly the same as the old/big image did.
