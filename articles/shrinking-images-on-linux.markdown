@@ -108,4 +108,4 @@ Next we shrink the image-file to a size that can just contain the partition. For
 
     $ truncate --size=$[(9181183+1)*512] myimage.img
 
-Now copy the new image over to your phone, where it should act exactly the same as the old/big image did.
+Now copy the new image over to your phone, where it should act exactly the same as the old/big image.
