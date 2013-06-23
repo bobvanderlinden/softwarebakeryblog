@@ -39,6 +39,7 @@ DriveDroid requires root, an USB cable and a phone which can potentially support
 ## Tutorials
 
 * [Windows installation on DriveDroid](/windows-install-on-drivedroid)
+* [Install Hirens Boot CD on DriveDroid](/install-hirensbootcd-on-drivedroid)
 * [Shrinking images on Linux](/shrinking-images-on-linux)
 
 ## Notes
@@ -51,6 +52,11 @@ DriveDroid requires root, an USB cable and a phone which can potentially support
 ## Version history
 
 <pre class="scrollable">
+v0.7.7
+* Fixed crash for some phones where USB-mode couldn't be determined
+* Made acquiring root in preference asynchonous (for some phones this takes too long)
+* Added None as an USB-mode
+
 v0.7.6
 * Replaced UMS-switch with USB-mode list
 * Added check for Android Debugging
