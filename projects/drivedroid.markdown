@@ -21,20 +21,12 @@ If you like DriveDroid, feel free to [donate](/donate).
 
 ## How do you make this work?
 
+* Download and install DriveDroid
 * Connect your phone to your PC using an USB cable
-* Download an image file (.iso or .img) or create one
+* Download an image file (.iso or .img) through DriveDroids downloadlist.
 * Select the image file in DriveDroid to let your phone 'host' the file over USB
 * (Re)start your PC and make sure the correct boot priority is set in the bios
 * The image should now be booted on your PC
-
-## Recommendations
-
-To quickly try DriveDroid download SliTaz from the download menu. It is an operating system of only 35MB, so it should be easily downloaded.
-You can also create a 100MB FAT image through the 'Create blank image...'-menu. It should show up as a normal empty USB-drive on your PC.
-
-## Requirements
-
-DriveDroid requires root, an USB cable and a phone which can potentially support USB Mass Storage. Most phones do, even ones that ship with MTP, however do not have it enabled. You need to enable the 'Mass Storage' USB-mode though DriveDroids preferences. If that does not work, send me a support email.
 
 ## Tutorials
 
@@ -44,10 +36,10 @@ DriveDroid requires root, an USB cable and a phone which can potentially support
 
 ## Notes
 
+* DriveDroid requires a rooted Android system
 * Some .iso files do not support being booted over USB, but most popular Linux distibutions are. All images that are downloadable through DriveDroid are supported.
 * Do NOT use DriveDroid while your SD card is mounted (being used on your PC). This can cause loss of data.
-* The following devices are known to not have USB Mass Storage at the moment:
-    * Asus Transformer Prime TF201
+* DriveDroid requires support for USB mass storage on your phone. Most devices have this (even ones that do not use it by default). However some phones or tablets have trouble with mass storage. If your phone or tablet does not seem work with DriveDroid, send me a support email.
 
 ## Version history
 
