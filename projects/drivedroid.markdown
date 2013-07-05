@@ -31,6 +31,7 @@ If you like DriveDroid, feel free to [donate](/donate).
 
 ## Tutorials
 
+* [Installing ISOs on DriveDroid](/using-rufus-to-create-bootable-usb-images)
 * [Windows installation on DriveDroid](/windows-install-on-drivedroid)
 * [Install Hirens Boot CD on DriveDroid](/install-hirensbootcd-on-drivedroid)
 * [Shrinking images on Linux](/shrinking-images-on-linux)
