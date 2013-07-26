@@ -3,13 +3,13 @@ Title: DriveDroid
 DriveDroid is an Android application that allows you to boot your PC from ISO/IMG files stored on your phone. This is ideal for trying Linux distributions or always having a rescue-system on the go... without the need to burn different CDs or USB pendrives.
 
 DriveDroid also includes a convenient download menu where you can download USB-images of a number of operating systems from your phone.
-You can also create USB-images which allows you to have a blank USB-drive where you can store files in. Another possibility is to use tools on your PC to make a bootable USB-drive out of the blank image that DriveDroid created.
+You can also create USB-images which allows you to have a blank USB-drive where you can store files in. Blank images also allow you to use tools on your PC to burn images to the drive and create a bootable USB disk that way.
 
 * [DriveDroid (Free) on Google Play](https://play.google.com/store/apps/details?id=com.softwarebakery.drivedroid)
 * [DriveDroid (Paid) on Google Play](https://play.google.com/store/apps/details?id=com.softwarebakery.drivedroid.paid)
-* [DriveDroid Beta](http://softwarebakery.com/apps/drivedroid/files/drivedroid-free-0.7.8-2548926.apk)
 * [DriveDroid on XDA-Developers](http://forum.xda-developers.com/showthread.php?t=2196707)
 * [#drivedroid on irc.freenode.net](http://webchat.freenode.net?channels=drivedroid)
+* [Distributions downloadable through DriveDroid](http://softwarebakery.com/apps/drivedroid/distributions.html)
 
 If you like DriveDroid, feel free to [donate](/donate).
 
@@ -41,11 +41,28 @@ If you like DriveDroid, feel free to [donate](/donate).
 * DriveDroid requires a rooted Android system
 * Some .iso files do not support being booted over USB, but most popular Linux distibutions are. All images that are downloadable through DriveDroid are supported.
 * Do NOT use DriveDroid while your SD card is mounted (being used on your PC). This can cause loss of data.
-* DriveDroid requires support for USB mass storage on your phone. Most devices have this (even ones that do not use it by default). However some phones or tablets have trouble with mass storage. If your phone or tablet does not seem work with DriveDroid, send me a support email.
+* DriveDroid requires support for USB mass storage on your phone. Most devices have this (even ones that do not use it by default). However some phones or tablets have trouble with mass storage. If your phone or tablet does not seem work with DriveDroid, send me a support email through DriveDroids preferences.
 
 ## Version history
 
 <pre class="scrollable">
+v0.8.0
+* Notifications for image hosting.
+* Setup guide for first time use and device compatibility testing.
+* Blacklist/whitelist in setup guide that checks whether device is found to be compatible or not.
+* Ability to choose different USB systems for better device compatibility.
+* Automatic USB mode switching upon hosting images.
+* Nicer host dialog with descriptions for each button and a help button.
+* Manually changing USB mode and persistent USB mode individually (was always combined in 0.7.7). This means DriveDroid will usually keep persistent USB settings, that are stored across reboots, untouched.
+* Ability to turn off automatic USB mode switching for people who want to switch manually.
+* Better support for symlinked LUNs (avoids duplicates).
+* Better and more detailed support emails.
+* Added super-user permission.
+* Support for some WonderMedia devices.
+* Support for Samsung Galaxy Tab P1000 N and L.
+* Support for some HUAWEI devices.
+* Fixed image creation where it can now create FAT images of 4MB, whereas previously it was only possible to create 32MB and higher. (FAT12/16/32 issue)
+
 v0.7.7
 * Fixed crash for some phones where USB-mode couldn't be determined
 * Made acquiring root in preference asynchonous (for some phones this takes too long)
@@ -61,7 +78,7 @@ v0.7.6
 * Fixed rare crash (freeSpace)
 
 v0.7.5
-* Fixed compatiblity with pre-jellybean Android phones
+* Fixed compatibility with pre-jellybean Android phones
 
 v0.7.4
 * Added support for cdrom devices (for supported kernels/roms)
