@@ -46,6 +46,11 @@ If you like DriveDroid, feel free to [donate](/donate).
 ## Version history
 
 <pre class="scrollable">
+v0.8.1
+* Fixed not being able to restore USB mode for some devices.
+* Fixed images not showing up when there's one available.
+* Fixed refreshing the imagelist when adding/editing images.
+
 v0.8.0
 * Notifications for image hosting.
 * Setup guide for first time use and device compatibility testing.
