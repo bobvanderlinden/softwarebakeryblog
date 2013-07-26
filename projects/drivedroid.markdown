@@ -29,6 +29,12 @@ If you like DriveDroid, feel free to [donate](/donate).
 * (Re)start your PC and make sure the correct boot priority is set in the bios
 * The image should now be booted on your PC
 
+## True CD-rom emulation
+
+Most phones emulate an USB stick when using DriveDroid. This is baked into the kernel of your phone. This allows you to use images that are compatible with USB sticks, but if ISO files do not support this, you need to [convert those images to be compatible with USB](/using-rufus-to-create-bootable-usb-images). Another possibility is making your phone emulate a CD-rom drive instead of an USB stick. This allows you to use *any* ISO file and boot from it.
+
+To get CD-rom emulation support you need to install a custom kernel or rom on your phone that supports this feature. You can find out which roms do on [the XDA forums](http://forum.xda-developers.com/showthread.php?t=2196707) under 'True CD-rom emulation'.
+
 ## Tutorials
 
 * [Installing ISOs on DriveDroid](/using-rufus-to-create-bootable-usb-images)
