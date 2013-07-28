@@ -52,6 +52,10 @@ To get CD-rom emulation support you need to install a custom kernel or rom on yo
 ## Version history
 
 <pre class="scrollable">
+v0.8.2
+* Fixed crash when no root is available
+* Fixed crash on Android 2.x
+
 v0.8.1
 * Fixed not being able to restore USB mode for some devices.
 * Fixed images not showing up when there's one available.
