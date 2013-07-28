@@ -7,6 +7,7 @@ You can also create USB-images which allows you to have a blank USB-drive where 
 
 * [DriveDroid (Free) on Google Play](https://play.google.com/store/apps/details?id=com.softwarebakery.drivedroid)
 * [DriveDroid (Paid) on Google Play](https://play.google.com/store/apps/details?id=com.softwarebakery.drivedroid.paid)
+* [DriveDroid 0.7.7](http://softwarebakery.com/apps/drivedroid/files/drivedroid-free-0.7.7.apk)
 * [DriveDroid on XDA-Developers](http://forum.xda-developers.com/showthread.php?t=2196707)
 * [#drivedroid on irc.freenode.net](http://webchat.freenode.net?channels=drivedroid)
 * [Distributions downloadable through DriveDroid](http://softwarebakery.com/apps/drivedroid/distributions.html)
