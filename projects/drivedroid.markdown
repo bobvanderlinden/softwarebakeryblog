@@ -53,6 +53,13 @@ To get CD-rom emulation support you need to install a custom kernel or rom on yo
 ## Version history
 
 <pre class="scrollable">
+v0.8.4
+* Fixed crash when pressing notification while restoring USB state.
+* Prioritize USB system list so that it's more likely the right USB system is on top.
+
+v0.8.3
+* Fixed upgrading message
+
 v0.8.2
 * Fixed crash when no root is available
 * Fixed crash on Android 2.x
@@ -94,7 +101,7 @@ v0.7.6
 * Fixed rare crash (freeSpace)
 
 v0.7.5
-* Fixed compatibility with pre-jellybean Android phones
+* Fixed compatiblity with pre-jellybean Android phones
 
 v0.7.4
 * Added support for cdrom devices (for supported kernels/roms)
