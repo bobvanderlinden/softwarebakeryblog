@@ -56,7 +56,7 @@ Start diskpart by typing `diskpart`.
 
 <img src="windows-install-on-drivedroid/03.png" class="box" />
 
-Show the connected drives by typing `list drive`.
+Show the connected disks by typing `list disk`.
 
 <img src="windows-install-on-drivedroid/04.png" class="box" />
 
