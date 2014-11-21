@@ -2,6 +2,8 @@ Title: Windows installation on DriveDroid
 Author: FrozenCow
 Date: 25 Januari 2013 13:31:00 +0200
 
+*Update*: Rufus is now the recommended to write Windows installation ISOs to DriveDroid and other USB drives. Please refer to [Using Rufus to create bootable USB images](/using-rufus-to-create-bootable-usb-images). The tutorial below still explains in more detailed steps how the same thing is done using more low-level tools.
+
 In version v0.7.0 of [DriveDroid (Free)](https://play.google.com/store/apps/details?id=com.softwarebakery.drivedroid) and [DriveDroid (Paid)](https://play.google.com/store/apps/details?id=com.softwarebakery.drivedroid.paid) a feature has been added to create blank images that look like normal USB disks. This allows you to use tools on your PC to fill the blank USB disk with whatever you want.
 
 In this post I will show how to create a Windows 7 installation disk that can be booted from your phone with DriveDroid. The disk will be made using files of the official Windows 7 ISO.
