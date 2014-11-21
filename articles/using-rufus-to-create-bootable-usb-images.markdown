@@ -17,7 +17,7 @@ This post will go through the steps of creating an image in DriveDroid and burni
 
 ## Requirements
 
-* [Rufus 1.3.3 or higher](http://rufus.akeo.ie/)
+* [Rufus 1.4.9 or higher](http://rufus.akeo.ie/)
 * Android phone with [DriveDroid](http://softwarebakery.com/projects/drivedroid)
 * USB cable
 
@@ -46,6 +46,8 @@ Now plug in your phone into your PC and start Rufus.
 <img src="using-rufus-to-create-bootable-usb-images/05-rufus.png" class="box" />
 
 Choose the USB device that corresponds to your phone. This is shown as NO_LABEL in Rufus.
+
+Note that when the USB device is not showing up in Rufus, click on the white triangle next to 'Format Options' and check 'List USB Hard Drives'.
 
 Check 'Create a bootable disk using:', choose 'ISO Image' from the dropdown box and click the CD-rom icon to choose the ISO you want to burn. Once the ISO is scanned by Rufus, it will fill in other options automatically.
 
