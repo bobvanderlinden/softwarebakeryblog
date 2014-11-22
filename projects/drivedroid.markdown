@@ -39,6 +39,7 @@ To get CD-rom emulation support you need to install a custom kernel or rom on yo
 ## Tutorials
 
 * [Installing ISOs on DriveDroid](/using-rufus-to-create-bootable-usb-images)
+* [Boot Windows 8 from DriveDroid](/boot-windows-from-drivedroid)
 * [Windows installation on DriveDroid](/windows-install-on-drivedroid)
 * [Install Hirens Boot CD on DriveDroid](/install-hirensbootcd-on-drivedroid)
 * [Shrinking images on Linux](/shrinking-images-on-linux)
