@@ -10,8 +10,9 @@ First off, many thanks to [xyancompgeek](http://forum.xda-developers.com/showpos
 
 # Requirements
 
-* DriveDroid v0.7.0+
+* [DriveDroid](https://play.google.com/store/apps/details?id=com.softwarebakery.drivedroid) v0.7.0+
 * 5.5GB free space on your Android phone
+* A phone that supports files greater than 4GB (most Android 4.1+ phones)
 * A PC with Windows 7 or 8
 * [WimLib](http://sourceforge.net/projects/wimlib/)
 * A Windows 8+ installation ISO
