@@ -6,7 +6,7 @@ In [previous](/using-rufus-to-create-bootable-usb-images) [tutorials](windows-in
 
 First off, many thanks to [xyancompgeek](http://forum.xda-developers.com/showpost.php?p=56795760&postcount=883) for his post on XDA-developers. It is what I'm basing this tutorial on.
 
-<iframe width="560" height="315" src="//www.youtube.com/embed/cuInQ55FcX4" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="//www.youtube.com/embed/cuInQ55FcX4" frameborder="0" allowfullscreen></iframe><br/>
 
 # Requirements
 
