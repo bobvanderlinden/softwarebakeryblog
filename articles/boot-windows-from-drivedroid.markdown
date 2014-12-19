@@ -15,7 +15,9 @@ First off, many thanks to [xyancompgeek](http://forum.xda-developers.com/showpos
 * A phone that supports files greater than 4GB (most Android 4.1+ phones)
 * A PC with Windows 7 or 8
 * [WimLib](http://sourceforge.net/projects/wimlib/)
-* A Windows 8+ installation ISO
+* A Windows 8 installation ISO
+
+Note that at this moment Windows 8.1 installation ISOs will not work. This is because your phone is recognized as a removable drive (like an USB stick) whereas Windows 8.1 requires its drive to be non-removable (like a harddisk). Windows 8 does allow removable drives. If you have a Windows 8.1 ISO, you might want to get a kernel that supports emulation of non-removable drives.
 
 # Image creation
 
