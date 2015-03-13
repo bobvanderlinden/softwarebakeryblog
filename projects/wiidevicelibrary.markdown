@@ -8,7 +8,7 @@ When using the Wii Device Library you don't have to worry about all the bluetoot
 
 Another nice feature is the ability to scan for Wii devices through bluetooth and connect to them when they are available. This makes it possible to *automatically connect to Wii devices* when they are syncing. It uses the libraries of several bluetooth stacks to scan, connect and communicate with the Wii devices. Also this part of the library can be extended with support for more bluetooth stacks and/or operating systems.
 
-We would like to thank the members of [WiiBrew](http://www.wiibrew.org/) and [WiiLi](http://www.wiili.org/) for the time and effort they put into figuring out how the Wiimote, its extensions and the Balanceboard operate. We also want to mention Brian Peek and his [WiimoteLib](http://www.wiimotelib.org/), part of which was used in Wii Device Library. Without these sources, we wouldn’t have been able to create this library.
+We would like to thank the members of [WiiBrew](http://www.wiibrew.org/) and WiiLi for the time and effort they put into figuring out how the Wiimote, its extensions and the Balanceboard operate. We also want to mention Brian Peek and his [WiimoteLib](http://www.wiimotelib.org/), part of which was used in Wii Device Library. Without these sources, we wouldn’t have been able to create this library.
 
 ### Supported Wii devices
 
@@ -72,8 +72,6 @@ The following code demonstrates how we can use a Wiimote device after connecting
 * [v1.1](/files/WiiDeviceLibrary-v1.1.zip)
 * [v1.2](/files/WiiDeviceLibrary-v1.2.zip)
 
-The full changelog is available at [Google Code](http://code.google.com/p/wiidevicelibrary/source/list).
-
 ### Source code
 
-You can get the source code from SVN, which is located at [Google Code](http://code.google.com/p/wiidevicelibrary/source/checkout).
+[Github](https://github.com/FrozenCow/wiidevicelibrary).
