@@ -1,12 +1,11 @@
-#main.clearfix
-  :each article in Array.prototype.slice.apply(articles, [0,15])
-    %section.article
-      %header
-        .author
-          %img{src:gravitar(article.author.email, 30), alt:article.author.name}
-          By #{article.author.name}
-          .date{title: article.date}&= formatDate(article.date, "%Y.%m.%d")
-        %h3
-          %a{href: "/" + article.name}&= article.title
-      = intro(article.markdown)
-      %a{href: "/" + article.name} Read more...
+:each article in Array.prototype.slice.apply(articles, [0,15])
+  %section.article
+    %header
+      .author
+        %img{src:gravitar(article.author.email, 30), alt:article.author.name}
+        By #{article.author.name}
+        .date{title: article.date}&= formatDate(article.date, "%Y.%m.%d")
+      %h3
+        %a{href: "/" + article.name}&= article.title
+    = intro(article.markdown)
+    %a{href: "/" + article.name} Read more...
