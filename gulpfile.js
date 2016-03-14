@@ -18,14 +18,15 @@ var gswitch = require('gulp-switch');
 var minifyCss = require('gulp-minify-css');
 var minifyHtml = require('gulp-minify-html');
 
+var zopfli = require('gulp-zopfli');
+
 var webserver = require('gulp-webserver');
+
 
 var helpers = require('./helpers');
 var commonmark = require('./commonmark');
 
-gulp.task('default', ['index','donate','contact','projects','articles','assets','feed']);
-
-gulp.task('webserver', function() {
+gulp.task('webserver', ['compressBuild'], function() {
 	gulp.src('build', { base: 'build' })
 		.pipe(webserver({
 			middleware: [
@@ -41,6 +42,16 @@ gulp.task('webserver', function() {
 				}
 			]
 		}));
+});
+
+gulp.task('build', ['index','donate','contact','projects','articles','assets','feed']);
+
+gulp.task('compressBuild', ['build'], function() {
+	gulp.src('build/*.{html,js,css,xml}')
+		.pipe(zopfli({
+			append: true
+		}))
+		.pipe(gulp.dest('build/'));
 });
 
 var output = function() {
