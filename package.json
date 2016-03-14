@@ -25,6 +25,7 @@
     "gulp-minify-html": "^1.0.1",
     "gulp-rename": "^1.2.0",
     "gulp-rsync": "0.0.5",
+    "gulp-shell": "^0.5.2",
     "gulp-switch": "^0.1.2",
     "gulp-uglify": "^1.1.0",
     "gulp-watch": "^4.1.1",

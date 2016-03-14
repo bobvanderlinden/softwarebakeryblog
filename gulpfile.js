@@ -18,6 +18,7 @@ var uglify = require('gulp-uglify');
 var gswitch = require('gulp-switch');
 var cleanCss = require('gulp-clean-css');
 var htmlmin = require('gulp-htmlmin');
+var shell = require('gulp-shell');
 
 var zopfli = require('gulp-zopfli');
 
@@ -58,14 +59,17 @@ gulp.task('compressBuild', ['build'], function() {
 		.pipe(gulp.dest('build/'));
 });
 
-gulp.task('publish', ['compressBuild'], function() {
-	gulp.src('build/**')
-		.pipe(rsync({
-			root: 'build',
-			hostname: 'softwarebakery',
-			destination: '/var/www/softwarebakery.com/'
-		}));
-});
+var rsyncDeployCommand = 'rsync --recursive --archive --checksum --verbose build/ softwarebakery:/var/www/softwarebakery.com/';
+
+gulp.task('deploy', ['compressBuild'], shell.task([
+	rsyncDeployCommand
+], { verbose: true }));
+
+
+
+gulp.task('deploy-dry', ['compressBuild'], shell.task([
+	rsyncDeployCommand + ' --dry-run'
+], { verbose: true }));
 
 var output = function() {
 	return gulp.dest('build/');
