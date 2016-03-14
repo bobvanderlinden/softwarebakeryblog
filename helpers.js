@@ -1,4 +1,4 @@
-var MD5 = require('MD5');
+var md5 = require('md5');
 var commonmark = require('./commonmark');
 
 var daysInWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
@@ -48,7 +48,7 @@ module.exports = {
   gravitar: function gravitar(email, size) {
     size = size || 200;
     return "http://www.gravatar.com/avatar/" +
-      MD5((email+"").trim().toLowerCase()) +
+      md5((email+"").trim().toLowerCase()) +
       "?r=pg&s=" + size + ".jpg&d=identicon";
   },
   formatDate: function formatDate(val, format) {
