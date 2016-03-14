@@ -11,7 +11,7 @@ var haml = require('haml');
 var extend = require('object-assign');
 var path = require('path');
 var merge = require('gulp-merge');
-var imageOptimization = require('gulp-image-optimization');
+var imagemin = require('gulp-imagemin');
 var uglify = require('gulp-uglify');
 var gswitch = require('gulp-switch');
 var cleanCss = require('gulp-clean-css');
@@ -75,7 +75,7 @@ var output = function() {
 
 var optimizeJs = uglify;
 var optimizeCss = cleanCss;
-var optimizeImage = imageOptimization;
+var optimizeImage = imagemin;
 var optimizeHtml = function() {
 	return htmlmin({collapseWhitespace: true});
 };
