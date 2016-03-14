@@ -369,3 +369,100 @@ function articleTemplate(templatePath) {
 		cb(null, file);
 	});
 }
+
+
+
+
+var webshot = require('webshot');
+var httpServer = require('http-server');
+var imageDiff = require('image-diff');
+var Stream = require('stream');
+var tmp = require('tmp');
+gulp.task('diff', ['compressBuild'], function() {
+	gulp.src('build/**/*.html', { base: 'build' })
+		.pipe(diff({}))
+		.pipe(rename({ suffix: '.diff', extname: '.png'}))
+		.pipe(gulp.dest('build-diff/'));
+});
+
+function diff(options) {
+	function createServer(cb) {
+		var server = httpServer.createServer({
+			root: 'build'
+		});
+		server.listen(8080, function(err) {
+			cb(err, server);
+		});
+	}
+
+	function diff(path, output, cb) {
+		var localUrl = 'http://localhost:8080' + path;
+		var remoteUrl = 'http://softwarebakery.com' + path;
+		var localShotFileName = tmp.fileSync({ postfix: '.png' }).name;
+		var remoteShotFileName = tmp.fileSync({ postfix: '.png' }).name;
+		webshot(localUrl, localShotFileName, function(err) {
+			if (err) { return cb(err); }
+			webshot(remoteUrl, remoteShotFileName, function(err) {
+				if (err) { return cb(err); }
+				imageDiff({
+					actualImage: localShotFileName,
+					expectedImage: remoteShotFileName,
+					diffImage: output,
+					shadow: true
+				}, cb);
+			});
+		});
+	}
+
+	var server;
+	var serverListeners = [];
+	createServer(function(err, s) {
+		server = s;
+		serverListeners.forEach(function(cb) {
+			cb(err, server);
+		});
+	});
+
+	function waitForServer(cb) {
+		if (server) {
+			cb(null, server);
+		} else {
+			serverListeners.push(cb);
+		}
+	}
+
+	var stream = new Stream.Transform({objectMode: true});
+
+	stream._transform = function(file, encoding, cb) {
+		var self = this;
+		waitForServer(function(err) {
+			if (err) { return cb(err); }
+			var path = file.relative;
+			var diffFilePath = require('tmp').fileSync().name;
+			diff('/' + path, diffFilePath, function(err, isSame) {
+				if(err) { return cb(err); }
+				if (isSame) {
+					// Ignore.
+					gutil.log('[UNCHANGED]', path);
+					cb();
+				} else {
+					gutil.log('[CHANGED]  ', path);
+					var diffFile = file.clone({ contents: false });
+					diffFile.contents = fs.createReadStream(diffFilePath);
+					diffFile.contents.on('close', function() {
+						fs.unlink(diffFilePath);
+					});
+					self.push(diffFile);
+					cb();
+				}
+			});
+		})
+	};
+
+	stream.on('end', function() {
+		waitForServer(function() {
+			server.close();
+		});
+	});
+	return stream;
+}
