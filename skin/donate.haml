@@ -25,10 +25,10 @@
   %p
     %a.FlattrButton{style:"display:none",title:"Donation",href:"http://softwarebakery.com/donate",data-flattr-uid:"FrozenCow",data-flattr-button:"default",data-flattr-category:"text"}
 :script
-window.addEventListener("load", function load(event){
+  window.addEventListener("load", function load(event){
   window.removeEventListener("load", load, false);
   var s = document.createElement('script');
   s.setAttribute('src', 'https://coinbase.com/assets/button.js');
   s.setAttribute('type', 'text/javascript');
   document.head.appendChild(s);
-},false);
+  },false);
