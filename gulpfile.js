@@ -22,6 +22,7 @@ var zopfli = require('gulp-zopfli');
 
 var webserver = require('gulp-webserver');
 
+var rsync = require('gulp-rsync');
 
 var helpers = require('./helpers');
 var commonmark = require('./commonmark');
@@ -52,6 +53,15 @@ gulp.task('compressBuild', ['build'], function() {
 			append: true
 		}))
 		.pipe(gulp.dest('build/'));
+});
+
+gulp.task('publish', ['compressBuild'], function() {
+	gulp.src('build/**')
+		.pipe(rsync({
+			root: 'build',
+			hostname: 'softwarebakery',
+			destination: '/var/www/softwarebakery.com/'
+		}));
 });
 
 var output = function() {
