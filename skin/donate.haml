@@ -1,35 +1,34 @@
-#main.clearfix
-  %article
-    %header
-      %h1
-        %a{href:"/donate"} Donate
-    %p Donations are always very much appreciated. It helps to allocate more time to projects and motivates me to work on the features that you want. I have set up a number of donation methods so please choose what you'd like best.
-    
-    %h2 Buy apps
-    %a{href:"https://play.google.com/store/apps/details?id=com.softwarebakery.drivedroid.paid"} Buy DriveDroid from Google Play
+%article
+  %header
+    %h1
+      %a{href:"/donate"} Donate
+  %p Donations are always very much appreciated. It helps to allocate more time to projects and motivates me to work on the features that you want. I have set up a number of donation methods so please choose what you'd like best.
+  
+  %h2 Buy apps
+  %a{href:"https://play.google.com/store/apps/details?id=com.softwarebakery.drivedroid.paid"} Buy DriveDroid from Google Play
 
-    %h2 Bitcoin
-    %p My address is&nbsp;
-      %span.bitcoin 193NkJ562fVt1jSSPxnLBPR1JcdZQUHBhP
-    %div{style:"vertical-align: middle; display: table-cell"}
-    	<a class="coinbase-button" data-code="812b35ffb540813c2f8e855bf20d9071" data-button-style="donation_large" href="https://coinbase.com/checkouts/812b35ffb540813c2f8e855bf20d9071">Donate Bitcoins</a>
-    %h2 Paypal
-    %p
-      %a{href: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WS7PTP92CJJ2L"}
-        %img{src: "https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"}
+  %h2 Bitcoin
+  %p My address is&nbsp;
+    %span.bitcoin 193NkJ562fVt1jSSPxnLBPR1JcdZQUHBhP
+  %div{style:"vertical-align: middle; display: table-cell"}
+  	<a class="coinbase-button" data-code="812b35ffb540813c2f8e855bf20d9071" data-button-style="donation_large" href="https://coinbase.com/checkouts/812b35ffb540813c2f8e855bf20d9071">Donate Bitcoins</a>
+  %h2 Paypal
+  %p
+    %a{href: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WS7PTP92CJJ2L"}
+      %img{src: "https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"}
 
-    -# %h2 Google Checkout
-    -# <form method="POST" action="https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/757540955908862">
-    -#   <input type="image" name="Google Checkout" alt="Fast checkout through Google" src="https://checkout.google.com/buttons/checkout.gif?merchant_id=757540955908862&w=180&h=46&style=white&variant=text&loc=en_US" />
-    -# </form>
-    %h2 Flattr
-    %p
-      %a.FlattrButton{style:"display:none",title:"Donation",href:"http://softwarebakery.com/donate",data-flattr-uid:"FrozenCow",data-flattr-button:"default",data-flattr-category:"text"}
+  -# %h2 Google Checkout
+  -# <form method="POST" action="https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/757540955908862">
+  -#   <input type="image" name="Google Checkout" alt="Fast checkout through Google" src="https://checkout.google.com/buttons/checkout.gif?merchant_id=757540955908862&w=180&h=46&style=white&variant=text&loc=en_US" />
+  -# </form>
+  %h2 Flattr
+  %p
+    %a.FlattrButton{style:"display:none",title:"Donation",href:"http://softwarebakery.com/donate",data-flattr-uid:"FrozenCow",data-flattr-button:"default",data-flattr-category:"text"}
 :script
   window.addEventListener("load", function load(event){
-    window.removeEventListener("load", load, false);
-    var s = document.createElement('script');
-    s.setAttribute('src', 'https://coinbase.com/assets/button.js');
-    s.setAttribute('type', 'text/javascript');
-    document.head.appendChild(s);
+  window.removeEventListener("load", load, false);
+  var s = document.createElement('script');
+  s.setAttribute('src', 'https://coinbase.com/assets/button.js');
+  s.setAttribute('type', 'text/javascript');
+  document.head.appendChild(s);
   },false);

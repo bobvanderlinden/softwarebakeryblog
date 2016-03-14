@@ -1,3 +1,5 @@
+title: Contact
+
 # [Contact](/contact)
 
 ## FrozenCow

@@ -1,16 +1,13 @@
-var Step = require('step'),
-    Haml = require('haml'),
-    Markdown = require('./markdown'),
-    MD5 = require('./md5'),
-    Buffer = require('buffer').Buffer,
-    Git = require('git-fs');
+var MD5 = require('MD5');
+var commonmark = require('./commonmark');
 
-function pad(num, count) {
-  count = count || 2;
-  num = "" + num;
-  for (i = num.length; i < count; i ++) num = "0" + num;
-  return num;
-}
+var daysInWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+  "Saturday", "Sunday"];
+var monthsInYear = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+var aMonths = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+var aDays = new Array( "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
 
 // accepts the client's time zone offset from GMT in minutes as a parameter.
 // returns the timezone offset in the format [+|-}DDDD
@@ -26,26 +23,18 @@ function getTZOString(timezoneOffset)
   return(s);
 }
 
-var daysInWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
-  "Saturday", "Sunday"];
-var monthsInYear = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"];
-var aMonths = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-var aDays = new Array( "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
-
-var Helpers = {
+module.exports = {
   inspect: require(process.binding('natives').util ? 'util' : 'sys').inspect,
-  intro: function intro(markdown) {
-    var html = Markdown.encode(markdown);
+  intro: function intro(content) {
+    var html = commonmark(content);
     var match = /<h[0-9]>/.exec(html);
     if (match) {
       html = html.substr(0, match.index);
     }
     return html;
   },
-  markdownEncode: function markdownEncode(markdown) {
-    return Markdown.encode(markdown+"");
+  markdownEncode: function markdownEncode(content) {
+    return commonmark(content+"");
   },
   github: function github(name) {
     return '<a href="http://github.com/' + name + '">' + name + '</a>';
@@ -59,7 +48,7 @@ var Helpers = {
   gravitar: function gravitar(email, size) {
     size = size || 200;
     return "http://www.gravatar.com/avatar/" +
-      MD5.md5((email+"").trim().toLowerCase()) +
+      MD5((email+"").trim().toLowerCase()) +
       "?r=pg&s=" + size + ".jpg&d=identicon";
   },
   formatDate: function formatDate(val, format) {
@@ -117,80 +106,9 @@ var Helpers = {
 
 };
 
-// Convert UTF8 strings to binary buffers for faster loading
-function stringToBuffer(string) {
-  var buffer = new Buffer(Buffer.byteLength(string));
-  buffer.write(string, 'utf8');
-  return buffer;
-};
-
-// Loads a haml template and caches in memory.
-var loadTemplate = Git.safe(function loadTemplate(version, name, callback) {
-  Step(
-    function loadHaml() {
-      Git.readFile(version, "skin/" + name + ".haml", this);
-    },
-    function compileTemplate(err, haml) {
-      if (err) { callback(err); return; }
-			haml=haml.toString();
-      return Haml(haml, (/\.xml$/).test(name));
-    },
-    callback
-  );
-});
-
-// Like loadTemplate, but doesn't require the version
-function compileTemplate(name, callback) {
-  Step(
-    function getHead() {
-      Git.getHead(this);
-    },
-    function loadTemplates(err, version) {
-      if (err) { callback(err); return; }
-      loadTemplate(version, name, this);
-    },
-    function (err, template) {
-      if (err) { callback(err); return; }
-      return function (data) {
-        data.__proto__ = Helpers;
-        return template.apply(this, arguments);
-      };
-    },
-    callback
-  );
-};
-
-function render(name, data, callback, partial) {
-  Step(
-    function getHead() {
-      Git.getHead(this);
-    },
-    function loadTemplates(err, version) {
-      if (err) { callback(err); return; }
-      loadTemplate(version, name, this.parallel());
-      if (!partial) {
-        loadTemplate(version, "layout", this.parallel());
-      }
-    },
-    function renderTemplates(err, template, layout) {
-      if (err) { callback(err); return; }
-      data.__proto__ = Helpers;
-      var content = template(data);
-      if (partial) { return stringToBuffer(content); }
-      data = {
-        projects: data.projects,
-        content: content,
-        title: data.title || ""
-      };
-      data.__proto__ = Helpers;
-      return stringToBuffer(layout(data));
-    },
-    callback
-  )
+function pad(num, count) {
+  count = count || 2;
+  num = "" + num;
+  for (i = num.length; i < count; i ++) num = "0" + num;
+  return num;
 }
-
-module.exports = {
-  stringToBuffer: stringToBuffer,
-  compileTemplate: compileTemplate,
-  render: render
-};

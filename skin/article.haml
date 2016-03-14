@@ -1,22 +1,21 @@
-#main.clearfix
-  %article
-    %header
-      %div.share
-        %a.FlattrButton{style:"display:none",title:title,href:"http://softwarebakery.com/"+name,data-flattr-uid:author.name,data-flattr-button:"compact",data-flattr-category:"text"}&= intro(markdown)
-      %h1
-        %a{href: "/#{name}"}&= title
-      .articlemeta
-        %span.author&= "by " + author.name
-        :if date
-          %time.date{datetime: formatDate(date, "%Y-%m-%d"), pubdate}&= formatDate(date, "%l %F %j, %Y")
-    = markdownEncode(markdown)
-  %hr{style:"clear:both"}
-  #disqus_thread.body
-  :script
-    var disqus_shortname = 'softwarebakery';
-    var disqus_url = "http://softwarebakery.com/#{name}";
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
+%article
+  %header
+    %div.share
+      %a.FlattrButton{style:"display:none",title:title,href:"http://softwarebakery.com/"+name,data-flattr-uid:author.name,data-flattr-button:"compact",data-flattr-category:"text"}&= intro(content)
+    %h1
+      %a{href: "/#{name}"}&= title
+    .articlemeta
+      %span.author&= "by " + author.name
+      :if date
+        %time.date{datetime: formatDate(date, "%Y-%m-%d"), pubdate}&= formatDate(date, "%l %F %j, %Y")
+  =content
+%hr{style:"clear:both"}
+#disqus_thread.body
+:script
+  var disqus_shortname = 'softwarebakery';
+  var disqus_url = "http://softwarebakery.com/#{name}";
+  (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
