@@ -45,7 +45,7 @@ The repository file is a JSON formatted file that links to the various images th
 
 This represents a list of distributions. Each distribution has the following properties:
 
-* `id` (*required*): a unique lower-case identifier of the distribution
+* `id` (*required*): a unique lower-case alphanumeric identifier of the distribution
 * `name` (*required*): the name (or title) of the distribution
 * `url` (*required*): a URL to the website of the distrution. This is will show a website-button in the actionbar when the distribution is selected.
 * `imageUrl` (*optional*): a relative or absolute URL to a logo for the distribution. The file should be a 48 x 48 PNG.
