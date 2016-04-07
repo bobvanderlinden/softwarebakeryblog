@@ -37,17 +37,17 @@ module.exports = {
     return commonmark(content+"");
   },
   github: function github(name) {
-    return '<a href="http://github.com/' + name + '">' + name + '</a>';
+    return '<a href="https://github.com/' + name + '">' + name + '</a>';
   },
   bitbucket: function bitbucket(name) {
-    return '<a href="http://bitbucket.com/' + name + '">' + name + '</a>';
+    return '<a href="https://bitbucket.com/' + name + '">' + name + '</a>';
   },
   twitter: function twitter(name) {
-    return '<a href="http://twitter.com/' + name + '">' + name + '</a>';
+    return '<a href="https://twitter.com/' + name + '">' + name + '</a>';
   },
   gravitar: function gravitar(email, size) {
     size = size || 200;
-    return "http://www.gravatar.com/avatar/" +
+    return "https://www.gravatar.com/avatar/" +
       md5((email+"").trim().toLowerCase()) +
       "?r=pg&s=" + size + ".jpg&d=identicon";
   },

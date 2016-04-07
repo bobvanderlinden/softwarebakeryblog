@@ -7,7 +7,7 @@ title: Contact
 * [Email](mailto:frozencow@gmail.com)
 * [Github](https://github.com/FrozenCow/)
 * [IRC at irc.freenode.net](http://webchat.freenode.net/)
-* [Website](http://softwarebakery.com/frozencow/)
+* [Website](https://softwarebakery.com/frozencow/)
 
 
 ## Maato
