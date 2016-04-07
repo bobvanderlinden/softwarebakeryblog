@@ -12,8 +12,8 @@
     :each article in articles
       %item
         %title&= article.title
-        %link&= "http://softwarebakery.com/" + article.name
-        %comments&= "http://softwarebakery.com/" + article.name + "#disqus_thread"
+        %link&= "https://softwarebakery.com/" + article.name
+        %comments&= "https://softwarebakery.com/" + article.name + "#disqus_thread"
         %pubDate&= formatRFC822Date(article.date)
         %guid(isPermaLink="true")&= "http://softwarebakery.com/" + article.name
         %description&= markdownEncode(article.markdown)
