@@ -18,7 +18,7 @@ var webserver = require("gulp-webserver");
 var helpers = require("./helpers");
 var commonmark = require("./commonmark");
 
-gulp.task("webserver", ["compressBuild"], function () {
+gulp.task("webserver", ["build"], function () {
   gulp.src("build", { base: "build" }).pipe(
     webserver({
       middleware: [

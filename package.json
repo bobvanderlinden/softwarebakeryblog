@@ -9,6 +9,7 @@
     "url": "git://95.211.63.145/softwarebakeryblog.git"
   },
   "scripts": {
+    "start": "gulp webserver",
     "build": "gulp build"
   },
   "engines": {
