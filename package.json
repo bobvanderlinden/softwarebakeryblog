@@ -8,6 +8,9 @@
     "type": "git",
     "url": "git://95.211.63.145/softwarebakeryblog.git"
   },
+  "scripts": {
+    "build": "gulp build"
+  },
   "engines": {
     "node": "^11.15.0"
   },
