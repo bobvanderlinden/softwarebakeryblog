@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: 11
       - run: npm ci
-      - run: npx gulp build
+      - run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v1
       - name: Upload artifact
