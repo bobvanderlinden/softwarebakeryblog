@@ -4,24 +4,17 @@ var del = require("del");
 var through = require("through2");
 var gutil = require("gulp-util");
 var buffer = require("gulp-buffer");
-var filter = require("gulp-filter");
 var rename = require("gulp-rename");
 var fs = require("fs");
 var haml = require("haml");
 var extend = require("object-assign");
 var path = require("path");
-var merge = require("gulp-merge");
 var imagemin = require("gulp-imagemin");
 var uglify = require("gulp-uglify");
-var gswitch = require("gulp-switch");
 var cleanCss = require("gulp-clean-css");
 var htmlmin = require("gulp-htmlmin");
 var shell = require("gulp-shell");
-
 var webserver = require("gulp-webserver");
-
-var rsync = require("gulp-rsync");
-
 var helpers = require("./helpers");
 var commonmark = require("./commonmark");
 
@@ -71,19 +64,6 @@ var optimizeImage = imagemin;
 var optimizeHtml = function () {
   return htmlmin({ collapseWhitespace: true });
 };
-
-function optimizeAssets(assets) {
-  var images = assets.pipe(filter("**/*.{png,jpg,jpeg}")).pipe(optimizeImage());
-  var css = assets.pipe(filter("**/*.css")).pipe(optimizeCss());
-  var js = assets.pipe(filter("**/*.js")).pipe(optimizeJs());
-  var rest = assets.pipe(
-    filter(["**/*", "!**/*.{png,jpg,jpeg}", "!**/*.css", "!**/*.js"])
-  );
-
-  var all = merge(images, css, js, rest);
-
-  return all;
-}
 
 gulp.task("staticPages", ["index", "contact", "donate"]);
 
@@ -136,9 +116,7 @@ gulp.task("articlePages", function () {
 });
 
 gulp.task("articleAssets", function () {
-  return optimizeAssets(gulp.src("articles/*/*", { base: "articles" })).pipe(
-    output()
-  );
+  return gulp.src("articles/*/*", { base: "articles" }).pipe(output());
 });
 
 // Projects
@@ -161,13 +139,11 @@ gulp.task("projectPages", function () {
 });
 
 gulp.task("projectAssets", function () {
-  return optimizeAssets(gulp.src("projects/*/*", { base: process.cwd() })).pipe(
-    output()
-  );
+  return gulp.src("projects/*/*", { base: process.cwd() }).pipe(output());
 });
 
 gulp.task("assets", function () {
-  return optimizeAssets(gulp.src("skin/public/*")).pipe(output());
+  return gulp.src("skin/public/*").pipe(output());
 });
 
 gulp.task("feed", function () {
@@ -400,109 +376,3 @@ function articleTemplate(templatePath) {
     cb(null, file);
   });
 }
-
-// var webshot = require("webshot");
-// var httpServer = require("http-server");
-// var imageDiff = require("image-diff");
-// var Stream = require("stream");
-// var tmp = require("tmp");
-// gulp.task("diff", ["build"], function () {
-//   gulp
-//     .src("build/**/*.html", { base: "build" })
-//     .pipe(diff({}))
-//     .pipe(rename({ suffix: ".diff", extname: ".png" }))
-//     .pipe(gulp.dest("build-diff/"));
-// });
-
-// function diff(options) {
-//   function createServer(cb) {
-//     var server = httpServer.createServer({
-//       root: "build",
-//     });
-//     server.listen(8080, function (err) {
-//       cb(err, server);
-//     });
-//   }
-
-//   function diff(path, output, cb) {
-//     var localUrl = "http://localhost:8080" + path;
-//     var remoteUrl = "http://softwarebakery.com" + path;
-//     var localShotFileName = tmp.fileSync({ postfix: ".png" }).name;
-//     var remoteShotFileName = tmp.fileSync({ postfix: ".png" }).name;
-//     webshot(localUrl, localShotFileName, function (err) {
-//       if (err) {
-//         return cb(err);
-//       }
-//       webshot(remoteUrl, remoteShotFileName, function (err) {
-//         if (err) {
-//           return cb(err);
-//         }
-//         imageDiff(
-//           {
-//             actualImage: localShotFileName,
-//             expectedImage: remoteShotFileName,
-//             diffImage: output,
-//             shadow: true,
-//           },
-//           cb
-//         );
-//       });
-//     });
-//   }
-
-//   var server;
-//   var serverListeners = [];
-//   createServer(function (err, s) {
-//     server = s;
-//     serverListeners.forEach(function (cb) {
-//       cb(err, server);
-//     });
-//   });
-
-//   function waitForServer(cb) {
-//     if (server) {
-//       cb(null, server);
-//     } else {
-//       serverListeners.push(cb);
-//     }
-//   }
-
-//   var stream = new Stream.Transform({ objectMode: true });
-
-//   stream._transform = function (file, encoding, cb) {
-//     var self = this;
-//     waitForServer(function (err) {
-//       if (err) {
-//         return cb(err);
-//       }
-//       var path = file.relative;
-//       var diffFilePath = require("tmp").fileSync().name;
-//       diff("/" + path, diffFilePath, function (err, isSame) {
-//         if (err) {
-//           return cb(err);
-//         }
-//         if (isSame) {
-//           // Ignore.
-//           gutil.log("[UNCHANGED]", path);
-//           cb();
-//         } else {
-//           gutil.log("[CHANGED]  ", path);
-//           var diffFile = file.clone({ contents: false });
-//           diffFile.contents = fs.createReadStream(diffFilePath);
-//           diffFile.contents.on("close", function () {
-//             fs.unlink(diffFilePath);
-//           });
-//           self.push(diffFile);
-//           cb();
-//         }
-//       });
-//     });
-//   };
-
-//   stream.on("end", function () {
-//     waitForServer(function () {
-//       server.close();
-//     });
-//   });
-//   return stream;
-// }
